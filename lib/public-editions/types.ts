@@ -1,9 +1,5 @@
-export type PublicEditionLocale = "en" | "sr" | "jp";
-
-export interface PublicEditionSnapshot {
+export interface PublicEditionRecord {
+  locale: string;
   day: string;
-  locale: PublicEditionLocale;
-  slug: string;
   title: string;
-  publishState: "draft" | "ready" | "published";
 }

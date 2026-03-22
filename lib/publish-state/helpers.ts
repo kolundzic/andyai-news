@@ -1,36 +1,22 @@
-import { ALLOWED_TRANSITIONS, PUBLISH_STATES } from "./config";
-import type { PublishSnapshot, PublishState } from "./types";
+import { DEFAULT_PUBLISH_STATE, PUBLISH_STATE_ORDER } from "./config";
+import type { PublishState, PublishStateRecord } from "./types";
 
-export function isValidPublishState(value: string): value is PublishState {
-  return PUBLISH_STATES.includes(value as PublishState);
-}
-
-export function canTransition(from: PublishState, to: PublishState): boolean {
-  return ALLOWED_TRANSITIONS[from]?.includes(to) ?? false;
-}
-
-export function getReleaseBadge(state: PublishState): string {
-  switch (state) {
-    case "published":
-      return "live";
-    case "approved":
-      return "approved";
-    case "scheduled":
-      return "scheduled";
-    case "review_ready":
-      return "review";
-    case "withdrawn":
-      return "withdrawn";
-    default:
-      return "draft";
-  }
-}
-
-export function summarizeSnapshot(snapshot: PublishSnapshot) {
+export function createPublishStateRecord(
+  editionId: string,
+  locale: string,
+  state: PublishState = DEFAULT_PUBLISH_STATE
+): PublishStateRecord {
   return {
-    version: snapshot.version,
-    items: snapshot.items.length,
-    publishedCount: snapshot.items.filter((item) => item.state === "published").length,
-    previewCount: snapshot.items.filter((item) => item.release_track === "preview").length,
+    editionId,
+    locale,
+    state,
+    updatedAt: new Date().toISOString(),
   };
+}
+
+export function isValidPublishTransition(
+  fromState: PublishState,
+  toState: PublishState
+): boolean {
+  return PUBLISH_STATE_ORDER.indexOf(toState) >= PUBLISH_STATE_ORDER.indexOf(fromState);
 }

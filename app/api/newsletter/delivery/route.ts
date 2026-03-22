@@ -1,6 +1,5 @@
-import { NextResponse } from "next/server";
-import { makeNewsletterDeliverySnapshot } from "@/lib/newsletter-delivery/helpers";
+import snapshot from "../../../../data/newsletter-delivery/delivery-snapshot.json";
 
 export async function GET() {
-  return NextResponse.json(makeNewsletterDeliverySnapshot("2026-03-22"));
+  return Response.json(snapshot);
 }

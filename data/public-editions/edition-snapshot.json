@@ -1,26 +1,9 @@
 {
-  "ok": true,
-  "editions": [
-    {
-      "day": "2026-03-22",
-      "locale": "en",
-      "slug": "en-daily-edition-2026-03-22",
-      "title": "AndyAI News EN Edition — 2026-03-22",
-      "publishState": "ready"
-    },
-    {
-      "day": "2026-03-22",
-      "locale": "sr",
-      "slug": "sr-daily-edition-2026-03-22",
-      "title": "AndyAI News SR Edition — 2026-03-22",
-      "publishState": "ready"
-    },
-    {
-      "day": "2026-03-22",
-      "locale": "jp",
-      "slug": "jp-daily-edition-2026-03-22",
-      "title": "AndyAI News JP Edition — 2026-03-22",
-      "publishState": "ready"
-    }
+  "version": "v1.3.0-c",
+  "route": "/{locale}/edition/{day}",
+  "locales": [
+    "en",
+    "sr",
+    "jp"
   ]
 }

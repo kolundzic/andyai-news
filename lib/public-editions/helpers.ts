@@ -1,12 +1,7 @@
-import { DEFAULT_PUBLIC_EDITION_SLUG } from "./config";
-import type { PublicEditionLocale, PublicEditionSnapshot } from "./types";
+import { PUBLIC_EDITIONS_ROUTE_TEMPLATE } from "./config";
 
-export function makePublicEditionSnapshot(day: string, locale: PublicEditionLocale): PublicEditionSnapshot {
-  return {
-    day,
-    locale,
-    slug: `${locale}-${DEFAULT_PUBLIC_EDITION_SLUG}-${day}`,
-    title: `AndyAI News ${locale.toUpperCase()} Edition — ${day}`,
-    publishState: "ready",
-  };
+export function buildPublicEditionPath(locale: string, day: string): string {
+  return PUBLIC_EDITIONS_ROUTE_TEMPLATE
+    .replace("{locale}", locale)
+    .replace("{day}", day);
 }

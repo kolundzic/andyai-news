@@ -1,36 +1,7 @@
 {
   "version": "v1.3.0-e",
-  "generatedAt": "2026-03-22T10:00:00.000Z",
-  "hooks": [
-    {
-      "id": "voice-hook:en:2026-03-22:voice",
-      "editionDay": "2026-03-22",
-      "locale": "en",
-      "channel": "voice",
-      "status": "prepared",
-      "route": "/en/edition/2026-03-22",
-      "enabled": true,
-      "notes": "Initial English voice delivery hook prepared."
-    },
-    {
-      "id": "voice-hook:sr:2026-03-22:voice",
-      "editionDay": "2026-03-22",
-      "locale": "sr",
-      "channel": "voice",
-      "status": "prepared",
-      "route": "/sr/edition/2026-03-22",
-      "enabled": true,
-      "notes": "Initial Serbian voice delivery hook prepared."
-    },
-    {
-      "id": "voice-hook:jp:2026-03-22:voice",
-      "editionDay": "2026-03-22",
-      "locale": "jp",
-      "channel": "voice",
-      "status": "prepared",
-      "route": "/jp/edition/2026-03-22",
-      "enabled": true,
-      "notes": "Initial Japanese voice delivery hook prepared."
-    }
+  "targets": [
+    "tts-prep",
+    "audio-pipeline"
   ]
 }

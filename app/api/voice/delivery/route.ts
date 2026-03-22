@@ -1,7 +1,5 @@
-import { NextResponse } from "next/server";
-import { createVoiceDeliverySnapshot } from "@/lib/voice-delivery/helpers";
+import snapshot from "../../../../data/voice-delivery/voice-delivery-snapshot.json";
 
 export async function GET() {
-  const snapshot = createVoiceDeliverySnapshot("2026-03-22");
-  return NextResponse.json(snapshot);
+  return Response.json(snapshot);
 }

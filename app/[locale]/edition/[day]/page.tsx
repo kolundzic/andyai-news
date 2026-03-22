@@ -1,16 +1,12 @@
-import { makePublicEditionSnapshot } from "@/lib/public-editions/helpers";
+type Props = { params: Promise<{ locale: string; day: string }> };
 
-export default async function PublicEditionPage({ params }: { params: Promise<{ locale: "en" | "sr" | "jp"; day: string }> }) {
+export default async function PublicEditionDayPage({ params }: Props) {
   const { locale, day } = await params;
-  const snapshot = makePublicEditionSnapshot(day, locale);
-
   return (
     <main style={{ padding: 24 }}>
-      <h1>AndyAI News Public Edition</h1>
-      <p>Locale: {snapshot.locale}</p>
-      <p>Day: {snapshot.day}</p>
-      <p>Slug: {snapshot.slug}</p>
-      <p>Status: {snapshot.publishState}</p>
+      <h1>Public Edition</h1>
+      <p>Locale: {locale}</p>
+      <p>Day: {day}</p>
     </main>
   );
 }

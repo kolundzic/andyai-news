@@ -1,22 +1,11 @@
 import type { PublishState } from "./types";
 
-export const PUBLISH_STATES: PublishState[] = [
+export const DEFAULT_PUBLISH_STATE: PublishState = "draft";
+
+export const PUBLISH_STATE_ORDER: PublishState[] = [
   "draft",
-  "review_ready",
-  "approved",
+  "review",
   "scheduled",
   "published",
-  "withdrawn",
+  "archived",
 ];
-
-export const PRODUCTION_LANE = "/admin";
-export const PREVIEW_LANE = "/admin/v110a";
-
-export const ALLOWED_TRANSITIONS: Record<PublishState, PublishState[]> = {
-  draft: ["review_ready", "withdrawn"],
-  review_ready: ["approved", "draft", "withdrawn"],
-  approved: ["scheduled", "published", "withdrawn"],
-  scheduled: ["published", "withdrawn"],
-  published: ["withdrawn"],
-  withdrawn: ["draft"],
-};

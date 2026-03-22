@@ -1,35 +1,5 @@
 {
-  "generatedAt": "2026-03-22T09:00:00.000Z",
-  "items": [
-    {
-      "editionId": "2026-03-22-main",
-      "day": "2026-03-22",
-      "locale": "en",
-      "subject": "AndyAI News \u2014 EN Edition \u2014 2026-03-22",
-      "previewText": "Delivery-ready newsletter payload for EN / 2026-03-22.",
-      "archiveUrl": "/archive/en/2026-03-22",
-      "editionUrl": "/en/edition/2026-03-22",
-      "status": "ready"
-    },
-    {
-      "editionId": "2026-03-22-main",
-      "day": "2026-03-22",
-      "locale": "sr",
-      "subject": "AndyAI News \u2014 SR Edition \u2014 2026-03-22",
-      "previewText": "Delivery-ready newsletter payload for SR / 2026-03-22.",
-      "archiveUrl": "/archive/sr/2026-03-22",
-      "editionUrl": "/sr/edition/2026-03-22",
-      "status": "ready"
-    },
-    {
-      "editionId": "2026-03-22-main",
-      "day": "2026-03-22",
-      "locale": "jp",
-      "subject": "AndyAI News \u2014 JP Edition \u2014 2026-03-22",
-      "previewText": "Delivery-ready newsletter payload for JP / 2026-03-22.",
-      "archiveUrl": "/archive/jp/2026-03-22",
-      "editionUrl": "/jp/edition/2026-03-22",
-      "status": "ready"
-    }
-  ]
+  "version": "v1.3.0-d",
+  "channel": "email",
+  "mode": "delivery-grade"
 }
