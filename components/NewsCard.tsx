@@ -8,14 +8,14 @@ type Props = {
 export default function NewsCard({ item }: Props) {
   return (
     <Link href={`/news/${item.id}`} className="card">
-      <div className="card-number">Story {item.id}</div>
+      <div className="card-number">{item.id}</div>
       <h2>{item.title}</h2>
       <p>{item.summary}</p>
       <div className="card-meta">
         <span className="pill">⚡ {item.impact}</span>
-        <span className="pill">🧠 Story mode</span>
+        <span className="pill">🧠 Detail view</span>
       </div>
-      <div className="link-row">Open full brief →</div>
+      <div className="link-row">Open in story mode →</div>
     </Link>
   );
 }
