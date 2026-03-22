@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "generated_at": "2026-03-22T15:00:00Z",
+  "current_day": "2026-03-22",
+  "editions": [
+    {
+      "edition_id": "2026-03-22-main",
+      "day": "2026-03-22",
+      "locale": "en",
+      "title": "Main Edition",
+      "summary": "Current live operating day snapshot.",
+      "lifecycle": "active",
+      "source": "live",
+      "created_at": "2026-03-22T08:00:00Z",
+      "updated_at": "2026-03-22T15:00:00Z"
+    },
+    {
+      "edition_id": "2026-03-21-main",
+      "day": "2026-03-21",
+      "locale": "en",
+      "title": "Main Edition",
+      "summary": "Archive memory snapshot for previous day.",
+      "lifecycle": "archived",
+      "source": "snapshot",
+      "created_at": "2026-03-21T08:00:00Z",
+      "updated_at": "2026-03-21T23:30:00Z"
+    }
+  ]
+}
