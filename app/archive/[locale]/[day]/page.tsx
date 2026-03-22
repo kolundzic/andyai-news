@@ -12,6 +12,7 @@ export default async function ArchiveDayPage({
 }) {
   const { locale, day } = await params;
   const nav = getPublicUiPrimaryNav();
+  const localeLabel = `${locale.toUpperCase()} archive`;
 
   return (
     <main className="min-h-screen bg-[#081b33] text-white">
@@ -31,11 +32,11 @@ export default async function ArchiveDayPage({
 
       <section className="mx-auto max-w-5xl px-6 py-14">
         <div className="mb-6 flex flex-wrap gap-2">
-          <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
-            Archive
+          <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-emerald-200">
+            Public archive
           </span>
           <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
-            {locale}
+            {localeLabel}
           </span>
           <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
             {day}
@@ -47,45 +48,46 @@ export default async function ArchiveDayPage({
         </h1>
 
         <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
-          Cleaner archive navigation and stronger consistency with the homepage and edition surfaces.
+          The archive surface is now framed as a public reading destination with clearer day and locale context, stronger hierarchy, and cleaner continuation paths.
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Archive Reading</h2>
+            <div className="mb-2 text-xs uppercase tracking-[0.18em] text-white/50">
+              Browse
+            </div>
+            <h2 className="text-lg font-semibold">Stored daily states</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Browse stored editorial states with clearer hierarchy and scan-ability.
+              Review archived editorial states for a specific locale and day with a cleaner, more public-facing presentation.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Audio Archive</h2>
+            <div className="mb-2 text-xs uppercase tracking-[0.18em] text-white/50">
+              Continue
+            </div>
+            <h2 className="text-lg font-semibold">Return to edition</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Audio archive, replay, and retention are now easier to connect conceptually from the public archive layer.
+              Move back into the matching edition route when you want a fresher public reading surface for the same locale and day.
             </p>
             <div className="mt-4">
               <Link
-                href="/admin/audio/archive"
+                href={getLocaleEditionHref(locale, day)}
                 className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
               >
-                Open audio archive
+                Open edition view
               </Link>
             </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Newsletter Delivery</h2>
-            <p className="mt-3 text-sm leading-6 text-white/70">
-              Public archive and outbound delivery surfaces now feel more connected.
-            </p>
-            <div className="mt-4">
-              <Link
-                href="/admin/newsletter/delivery"
-                className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
-              >
-                Open newsletter
-              </Link>
+            <div className="mb-2 text-xs uppercase tracking-[0.18em] text-white/50">
+              Orientation
             </div>
+            <h2 className="text-lg font-semibold">Locale-aware archive</h2>
+            <p className="mt-3 text-sm leading-6 text-white/70">
+              Readers arriving directly on archive routes now get clearer visual cues about where they are and what date they are viewing.
+            </p>
           </div>
         </div>
 
@@ -94,7 +96,7 @@ export default async function ArchiveDayPage({
             href="/"
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Home
+            Back home
           </Link>
           <Link
             href={getLocaleEditionHref(locale, day)}
@@ -106,7 +108,7 @@ export default async function ArchiveDayPage({
             href={getLocaleArchiveHref(locale, day)}
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Refresh archive route
+            Refresh archive
           </Link>
         </div>
       </section>

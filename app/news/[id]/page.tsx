@@ -46,6 +46,7 @@ export default async function NewsDetailPage({ params }: Props) {
             <span className="pill">⚡ {item.impact}</span>
             <span className="pill">📌 Why it matters</span>
             <span className="pill">🧭 Story mode</span>
+            <span className="pill">🌐 Public briefing</span>
           </div>
         </header>
 
@@ -68,6 +69,22 @@ export default async function NewsDetailPage({ params }: Props) {
               <li key={point}>{point}</li>
             ))}
           </ul>
+        </section>
+
+        <section className="section">
+          <h2>Continue reading</h2>
+          <p>
+            After finishing a story, the public reading flow should make the next step obvious:
+            continue through the current briefing, or return to the homepage to reopen the broader daily surface.
+          </p>
+          <div className="card-meta">
+            <Link href="/" className="pill">
+              ← Back home
+            </Link>
+            <Link href="/" className="pill">
+              Open today&apos;s briefing
+            </Link>
+          </div>
         </section>
 
         <div className="nav-row">
