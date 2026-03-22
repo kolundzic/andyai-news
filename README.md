@@ -1,3 +1,7 @@
+## License
+Apache-2.0 © Andrija Kolundzic (Andy)
+
+
 # AndyAI News v1.0
 
 First production polish pack and first stable MVP release.
