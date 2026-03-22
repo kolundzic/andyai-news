@@ -1,0 +1,11 @@
+{
+  "asset_id": "audasset_2026-03-22_main_en_daily-brief_v1",
+  "edition_id": "2026-03-22-main",
+  "day": "2026-03-22",
+  "locale": "en",
+  "role": "daily_brief",
+  "sync_mode": "segment",
+  "transcript_url": "/audio/en/2026-03-22/main-brief.txt",
+  "captions_url": "/audio/en/2026-03-22/main-brief.vtt",
+  "structured_transcript_url": "/audio/en/2026-03-22/main-brief.transcript.json"
+}
