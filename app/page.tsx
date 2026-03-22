@@ -34,8 +34,12 @@ export default function HomePage() {
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
             {hero.title}
           </h1>
-          <p className="mt-5 text-base leading-7 text-white/70 sm:text-lg">
-            {hero.description}
+          <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
+            Curated AI and technology briefings with a cleaner reading flow,
+            clearer public surfaces, and a calmer way to move through the day’s key stories.
+          </p>
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-white/55 sm:text-base">
+            Start from the latest edition, open an archive day, or move directly into story mode.
           </p>
         </div>
 
@@ -52,7 +56,13 @@ export default function HomePage() {
                   href={card.href}
                   className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
                 >
-                  {card.cta}
+                  {card.cta === "Open"
+                    ? "Open destination"
+                    : card.cta === "Browse"
+                    ? "Browse now"
+                    : card.cta === "Read"
+                    ? "Start reading"
+                    : card.cta}
                 </Link>
               </div>
             </div>
