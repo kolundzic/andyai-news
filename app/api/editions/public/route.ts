@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { getPublicEditionSnapshot, getPublicEditionsMeta } from "@/lib/public-editions/helpers";
+import { makePublicEditionSnapshot } from "@/lib/public-editions/helpers";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const day = searchParams.get("day") ?? undefined;
-
+export async function GET() {
   return NextResponse.json({
     ok: true,
-    meta: getPublicEditionsMeta(),
-    editions: getPublicEditionSnapshot(day),
+    editions: [
+      makePublicEditionSnapshot("2026-03-22", "en"),
+      makePublicEditionSnapshot("2026-03-22", "sr"),
+      makePublicEditionSnapshot("2026-03-22", "jp"),
+    ],
   });
 }
