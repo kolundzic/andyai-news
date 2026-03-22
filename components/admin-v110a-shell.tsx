@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   V110_FEATURE_CARDS,
   type DraftAutosaveState,
@@ -14,6 +14,8 @@ import {
   safeLoadJSON,
   safeSaveJSON
 } from "@/lib/v110a-storage";
+
+type SaveState = "idle" | "saving" | "saved";
 
 function SectionTitle({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
@@ -103,6 +105,25 @@ function MetaRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+function SaveBadge({ state }: { state: SaveState }) {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        padding: "4px 10px",
+        borderRadius: 999,
+        border: "1px solid rgba(255,255,255,0.18)",
+        fontSize: 12,
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        opacity: 0.95
+      }}
+    >
+      {state}
+    </span>
+  );
+}
+
 export default function AdminV110AShell({
   manifestSummary
 }: {
@@ -122,6 +143,12 @@ export default function AdminV110AShell({
     })
   );
 
+  const [saveState, setSaveState] = useState<SaveState>("idle");
+
+  const [draftText, setDraftText] = useState<string>(() =>
+    safeLoadJSON<string>(V110_STORAGE_KEYS.autosaveDraft, "")
+  );
+
   const [liveDay, setLiveDay] = useState<LiveDaySwitchState>(() =>
     safeLoadJSON<LiveDaySwitchState>(V110_STORAGE_KEYS.liveDayCandidate, {
       currentLiveDate: manifestSummary.liveDate,
@@ -136,6 +163,10 @@ export default function AdminV110AShell({
       includeSummariesOnly: false
     })
   );
+
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const savedBadgeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const firstRenderRef = useRef(true);
 
   const selectedIssue = useMemo(() => {
     return (
@@ -156,14 +187,47 @@ export default function AdminV110AShell({
     ].join("\n");
   }, [liveDay.candidateDate, workingDate, newsletter]);
 
-  function simulateAutosave() {
-    const next = {
-      ...autosave,
-      lastSavedAt: nowIso()
+  useEffect(() => {
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false;
+      return;
+    }
+
+    if (!autosave.enabled) return;
+
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    if (savedBadgeTimeoutRef.current) clearTimeout(savedBadgeTimeoutRef.current);
+
+    setSaveState("saving");
+
+    saveTimeoutRef.current = setTimeout(() => {
+      safeSaveJSON(V110_STORAGE_KEYS.autosaveDraft, draftText);
+
+      const nextMeta = {
+        ...autosave,
+        lastSavedAt: nowIso()
+      };
+
+      setAutosave(nextMeta);
+      safeSaveJSON(V110_STORAGE_KEYS.autosaveMeta, nextMeta);
+      setSaveState("saved");
+
+      savedBadgeTimeoutRef.current = setTimeout(() => {
+        setSaveState("idle");
+      }, 1200);
+    }, 350);
+
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     };
-    setAutosave(next);
-    safeSaveJSON(V110_STORAGE_KEYS.autosaveMeta, next);
-  }
+  }, [draftText, autosave.enabled]);
+
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+      if (savedBadgeTimeoutRef.current) clearTimeout(savedBadgeTimeoutRef.current);
+    };
+  }, []);
 
   function rememberLiveDayCandidate(nextDate: string) {
     const next = {
@@ -179,16 +243,51 @@ export default function AdminV110AShell({
     safeSaveJSON(V110_STORAGE_KEYS.newsletterPrefs, next);
   }
 
+  function restoreDraft() {
+    const restored = safeLoadJSON<string>(V110_STORAGE_KEYS.autosaveDraft, "");
+    setDraftText(restored);
+
+    const restoredMeta = safeLoadJSON<DraftAutosaveState>(V110_STORAGE_KEYS.autosaveMeta, {
+      enabled: true,
+      lastSavedAt: null,
+      storageKey: V110_STORAGE_KEYS.autosaveDraft
+    });
+    setAutosave(restoredMeta);
+    setSaveState("idle");
+  }
+
+  function clearDraft() {
+    setDraftText("");
+    const nextMeta = {
+      ...autosave,
+      lastSavedAt: null
+    };
+    setAutosave(nextMeta);
+    safeSaveJSON(V110_STORAGE_KEYS.autosaveDraft, "");
+    safeSaveJSON(V110_STORAGE_KEYS.autosaveMeta, nextMeta);
+    setSaveState("idle");
+  }
+
+  function toggleAutosave(nextEnabled: boolean) {
+    const nextMeta = {
+      ...autosave,
+      enabled: nextEnabled
+    };
+    setAutosave(nextMeta);
+    safeSaveJSON(V110_STORAGE_KEYS.autosaveMeta, nextMeta);
+    setSaveState("idle");
+  }
+
   return (
     <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 20px 80px 20px" }}>
       <div style={{ marginBottom: 24 }}>
-        <p style={{ margin: 0, opacity: 0.7, fontSize: 14 }}>AndyAI News / Admin / v1.1.0-b</p>
+        <p style={{ margin: 0, opacity: 0.7, fontSize: 14 }}>AndyAI News / Admin / v1.1.0-c</p>
         <h1 style={{ marginTop: 8, marginBottom: 10, fontSize: 36, lineHeight: 1.1 }}>
-          Operator Upgrade Pack — Multi-day Navigation
+          Operator Upgrade Pack — Draft Autosave
         </h1>
         <p style={{ margin: 0, maxWidth: 760, lineHeight: 1.7, opacity: 0.9 }}>
-          This step upgrades the safe preview route with manifest-backed issue discovery, working-date selection,
-          and dataset metadata preview without touching the main admin workflow.
+          This step upgrades the safe preview route with local-first autosave behavior, restore/clear controls,
+          and visible save state feedback without touching the main admin workflow.
         </p>
       </div>
 
@@ -204,7 +303,13 @@ export default function AdminV110AShell({
           <Card
             key={item.id}
             title={item.title}
-            status={item.id === "multi-day-navigation" ? "done" : item.status}
+            status={
+              item.id === "multi-day-navigation"
+                ? "done"
+                : item.id === "draft-autosave"
+                ? "done"
+                : item.status
+            }
             summary={item.summary}
             whyItMatters={item.whyItMatters}
             nextStep={item.nextStep}
@@ -229,7 +334,7 @@ export default function AdminV110AShell({
         >
           <SectionTitle
             title="Multi-day navigation"
-            subtitle="Now backed by manifest issue discovery instead of hardcoded placeholder dates."
+            subtitle="Manifest-backed issue discovery and working-date selection."
           />
 
           <p style={{ marginTop: 0, lineHeight: 1.6 }}>
@@ -282,22 +387,55 @@ export default function AdminV110AShell({
           }}
         >
           <SectionTitle
-            title="Draft autosave slot"
-            subtitle="Local-first skeleton that proves the save-state shape before wiring it to the real editor fields."
+            title="Draft autosave"
+            subtitle="Real local-first autosave preview with save-state feedback and recovery controls."
           />
-          <p style={{ marginTop: 0, lineHeight: 1.6 }}>
-            <strong>Enabled:</strong> {autosave.enabled ? "yes" : "no"}
-            <br />
-            <strong>Last saved:</strong> {autosave.lastSavedAt ?? "not saved yet"}
-            <br />
-            <strong>Storage key:</strong> {autosave.storageKey}
-          </p>
-          <button
-            onClick={simulateAutosave}
-            style={{ padding: "10px 14px", borderRadius: 10, cursor: "pointer" }}
-          >
-            Simulate autosave
-          </button>
+
+          <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
+            <SaveBadge state={saveState} />
+            <span style={{ fontSize: 14, opacity: 0.9 }}>
+              <strong>Last saved:</strong> {autosave.lastSavedAt ?? "not saved yet"}
+            </span>
+          </div>
+
+          <label style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
+            <input
+              type="checkbox"
+              checked={autosave.enabled}
+              onChange={(e) => toggleAutosave(e.target.checked)}
+            />
+            autosave enabled
+          </label>
+
+          <textarea
+            value={draftText}
+            onChange={(e) => setDraftText(e.target.value)}
+            placeholder="Type a draft note, issue summary, operator note, or newsletter intro here..."
+            style={{
+              width: "100%",
+              minHeight: 180,
+              borderRadius: 12,
+              padding: 12,
+              resize: "vertical",
+              lineHeight: 1.6,
+              marginBottom: 12
+            }}
+          />
+
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <button
+              onClick={restoreDraft}
+              style={{ padding: "10px 14px", borderRadius: 10, cursor: "pointer" }}
+            >
+              Restore draft
+            </button>
+            <button
+              onClick={clearDraft}
+              style={{ padding: "10px 14px", borderRadius: 10, cursor: "pointer" }}
+            >
+              Clear draft
+            </button>
+          </div>
         </section>
 
         <section
