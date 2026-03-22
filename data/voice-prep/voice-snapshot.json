@@ -1,0 +1,42 @@
+{
+  "version": "v1.2.0-e",
+  "generatedAt": "2026-03-22T00:00:00Z",
+  "entries": [
+    {
+      "id": "voiceprep-2026-03-22-en",
+      "editionDay": "2026-03-22",
+      "locale": "en",
+      "title": "Main AI News Brief",
+      "summary": "Primary English voice-over planning entry for the day.",
+      "scriptPreview": "Today on AndyAI News, we cover the key AI developments shaping the market and the tools ecosystem.",
+      "targetDurationSec": 120,
+      "preferredVoice": "neutral_news_en_01",
+      "status": "ready",
+      "notes": "Prepared for later TTS provider integration."
+    },
+    {
+      "id": "voiceprep-2026-03-22-sr",
+      "editionDay": "2026-03-22",
+      "locale": "sr",
+      "title": "Glavni AI pregled dana",
+      "summary": "Srpski voice-over plan za dnevni pregled.",
+      "scriptPreview": "Danas na AndyAI News donosimo kratak pregled najvažnijih AI novosti i alata.",
+      "targetDurationSec": 120,
+      "preferredVoice": "neutral_news_sr_01",
+      "status": "draft",
+      "notes": "Čeka finalno doterivanje copy-ja."
+    },
+    {
+      "id": "voiceprep-2026-03-22-jp",
+      "editionDay": "2026-03-22",
+      "locale": "jp",
+      "title": "本日のAIニュース概要",
+      "summary": "日本語版の音声準備エントリ。",
+      "scriptPreview": "本日のAndyAI Newsでは、主要なAI動向と注目ツールを短く整理します。",
+      "targetDurationSec": 120,
+      "preferredVoice": "neutral_news_jp_01",
+      "status": "draft",
+      "notes": "Later binding to locale-specific voice lane."
+    }
+  ]
+}
