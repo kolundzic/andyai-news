@@ -1,0 +1,40 @@
+{
+  "version": "v1.3.0-c",
+  "default_day": "2026-03-22",
+  "locales": ["en", "sr", "jp"],
+  "records": [
+    {
+      "edition_id": "2026-03-22-main-en",
+      "day": "2026-03-22",
+      "locale": "en",
+      "state": "published",
+      "title": "AndyAI News EN Edition",
+      "summary": "Locale-specific public edition for EN on 2026-03-22.",
+      "hero_headline": "Top AI stories for 2026-03-22 (EN)",
+      "primary_route": "/en/edition/2026-03-22",
+      "archive_route": "/archive/en/2026-03-22"
+    },
+    {
+      "edition_id": "2026-03-22-main-sr",
+      "day": "2026-03-22",
+      "locale": "sr",
+      "state": "published",
+      "title": "AndyAI News SR Edition",
+      "summary": "Locale-specific public edition for SR on 2026-03-22.",
+      "hero_headline": "Top AI stories for 2026-03-22 (SR)",
+      "primary_route": "/sr/edition/2026-03-22",
+      "archive_route": "/archive/sr/2026-03-22"
+    },
+    {
+      "edition_id": "2026-03-22-main-jp",
+      "day": "2026-03-22",
+      "locale": "jp",
+      "state": "published",
+      "title": "AndyAI News JP Edition",
+      "summary": "Locale-specific public edition for JP on 2026-03-22.",
+      "hero_headline": "Top AI stories for 2026-03-22 (JP)",
+      "primary_route": "/jp/edition/2026-03-22",
+      "archive_route": "/archive/jp/2026-03-22"
+    }
+  ]
+}
