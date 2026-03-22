@@ -1,0 +1,24 @@
+{
+  "version": "v1.4.0-h",
+  "mode": "audio_archive_retention_replay",
+  "records": [
+    {
+      "archive_record_id": "audarch_2026-03-22_main_en_daily-brief",
+      "edition_id": "2026-03-22-main",
+      "day": "2026-03-22",
+      "locale": "en",
+      "role": "daily_brief",
+      "official_asset_id": "audasset_2026-03-22_main_en_daily-brief_v1",
+      "source_ref": "edition:2026-03-22-main:summary:en",
+      "source_text_hash": "sha256:demo",
+      "published_at": "2026-03-22T09:20:00Z",
+      "archive_status": "active",
+      "replay_status": "available",
+      "retention_class": "permanent",
+      "superseded_by_asset_id": null,
+      "notes": null,
+      "created_at": "2026-03-22T09:20:00Z",
+      "updated_at": "2026-03-22T09:20:00Z"
+    }
+  ]
+}
