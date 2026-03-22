@@ -13,9 +13,25 @@ type Story = {
   keyPoints: string[];
 };
 
+type ValidationLevel = 'error' | 'warning';
+
 type ValidationIssue = {
-  level: 'error' | 'warning';
+  level: ValidationLevel;
   message: string;
+};
+
+type PublishCheck = {
+  label: string;
+  ok: boolean;
+  detail: string;
+};
+
+type NewsPayload = {
+  date: string;
+  title: string;
+  subtitle: string;
+  coverImage: string;
+  news: Story[];
 };
 
 function createEmptyStory(id: number): Story {
@@ -30,95 +46,179 @@ function createEmptyStory(id: number): Story {
   };
 }
 
-function makeDraftFromDate(date: string, sourcePayload?: any) {
-  const base = sourcePayload ?? getLatestPayload();
+function createEmptyPayload(date = ''): NewsPayload {
+  return {
+    date,
+    title: 'AndyAI News',
+    subtitle: 'Top AI news today — summary + detail views',
+    coverImage: date ? `/covers/${date}-cover.jpg` : '/covers/YYYY-MM-DD-cover.jpg',
+    news: Array.from({ length: 9 }, (_, idx) => createEmptyStory(idx + 1)),
+  };
+}
+
+function sanitizeStory(story: Partial<Story>, index: number): Story {
+  const content = Array.isArray(story.content) ? story.content : [];
+  const keyPoints = Array.isArray(story.keyPoints) ? story.keyPoints : [];
+
+  return {
+    id: Number(story.id ?? index + 1),
+    title: String(story.title ?? '').trim(),
+    summary: String(story.summary ?? '').trim(),
+    impact: String(story.impact ?? '').trim(),
+    whyItMatters: String(story.whyItMatters ?? '').trim(),
+    content: Array.from({ length: Math.max(3, content.length || 3) }, (_, i) =>
+      String(content[i] ?? '').trim()
+    ),
+    keyPoints: Array.from({ length: Math.max(3, keyPoints.length || 3) }, (_, i) =>
+      String(keyPoints[i] ?? '').trim()
+    ),
+  };
+}
+
+function sanitizePayload(raw: unknown): NewsPayload {
+  const obj = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+  const news = Array.isArray(obj.news) ? obj.news : [];
+
+  return {
+    date: String(obj.date ?? '').trim(),
+    title: String(obj.title ?? 'AndyAI News').trim(),
+    subtitle: String(obj.subtitle ?? 'Top AI news today — summary + detail views').trim(),
+    coverImage: String(obj.coverImage ?? '').trim(),
+    news: news.map((story, index) => sanitizeStory((story as Partial<Story>) ?? {}, index)),
+  };
+}
+
+function makeDraftFromDate(date: string, sourcePayload?: NewsPayload): NewsPayload {
+  const base = sourcePayload ?? sanitizePayload(getLatestPayload());
 
   return {
     ...base,
     date,
     coverImage: `/covers/${date}-cover.jpg`,
-    news: Array.isArray(base.news)
-      ? base.news.map((story: Story, index: number) => ({
-          id: index + 1,
-          title: story.title ?? '',
-          summary: story.summary ?? '',
-          impact: story.impact ?? '',
-          whyItMatters: story.whyItMatters ?? '',
-          content: Array.isArray(story.content) ? story.content.slice(0, 3) : ['', '', ''],
-          keyPoints: Array.isArray(story.keyPoints) ? story.keyPoints.slice(0, 3) : ['', '', ''],
-        }))
-      : Array.from({ length: 9 }, (_, idx) => createEmptyStory(idx + 1)),
+    news: (base.news.length ? base.news : createEmptyPayload(date).news).map((story, index) => ({
+      id: index + 1,
+      title: story.title ?? '',
+      summary: story.summary ?? '',
+      impact: story.impact ?? '',
+      whyItMatters: story.whyItMatters ?? '',
+      content: Array.from({ length: 3 }, (_, i) => String(story.content?.[i] ?? '').trim()),
+      keyPoints: Array.from({ length: 3 }, (_, i) => String(story.keyPoints?.[i] ?? '').trim()),
+    })),
   };
 }
 
-function validatePayload(payload: any): ValidationIssue[] {
+function validatePayload(payload: NewsPayload): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
-  if (!payload || typeof payload !== 'object') {
-    return [{ level: 'error', message: 'Payload is not a valid object.' }];
-  }
-
   if (!payload.date || !/^\d{4}-\d{2}-\d{2}$/.test(payload.date)) {
-    issues.push({ level: 'error', message: 'Date is missing or not in YYYY-MM-DD format.' });
+    issues.push({
+      level: 'error',
+      message: 'Date is missing or not in YYYY-MM-DD format.',
+    });
   }
 
-  if (!payload.title?.trim()) {
-    issues.push({ level: 'error', message: 'Top-level title is required.' });
+  if (!payload.title.trim()) {
+    issues.push({
+      level: 'error',
+      message: 'Top-level title is required.',
+    });
   }
 
-  if (!payload.subtitle?.trim()) {
-    issues.push({ level: 'warning', message: 'Subtitle is empty.' });
+  if (!payload.subtitle.trim()) {
+    issues.push({
+      level: 'warning',
+      message: 'Subtitle is empty.',
+    });
   }
 
-  if (!payload.coverImage?.trim()) {
-    issues.push({ level: 'error', message: 'Cover image path is required.' });
+  if (!payload.coverImage.trim()) {
+    issues.push({
+      level: 'error',
+      message: 'Cover image path is required.',
+    });
   }
 
   if (!Array.isArray(payload.news)) {
-    issues.push({ level: 'error', message: 'news must be an array.' });
+    issues.push({
+      level: 'error',
+      message: 'news must be an array.',
+    });
     return issues;
   }
 
   if (payload.news.length !== 9) {
-    issues.push({ level: 'warning', message: `Expected 9 stories, found ${payload.news.length}.` });
+    issues.push({
+      level: 'warning',
+      message: `Expected 9 stories, found ${payload.news.length}.`,
+    });
   }
 
-  payload.news.forEach((story: Story, index: number) => {
-    const label = `Story ${story?.id ?? index + 1}`;
+  payload.news.forEach((story, index) => {
+    const label = `Story ${story.id || index + 1}`;
 
-    if (story?.id !== index + 1) {
-      issues.push({ level: 'warning', message: `${label}: ID should usually be ${index + 1}.` });
-    }
-
-    if (!story?.title?.trim()) {
-      issues.push({ level: 'error', message: `${label}: title is required.` });
-    }
-    if (!story?.summary?.trim()) {
-      issues.push({ level: 'error', message: `${label}: summary is required.` });
-    }
-    if (!story?.impact?.trim()) {
-      issues.push({ level: 'warning', message: `${label}: impact is empty.` });
-    }
-    if (!story?.whyItMatters?.trim()) {
-      issues.push({ level: 'warning', message: `${label}: whyItMatters is empty.` });
+    if (story.id !== index + 1) {
+      issues.push({
+        level: 'warning',
+        message: `${label}: ID should usually be ${index + 1}.`,
+      });
     }
 
-    if (!Array.isArray(story?.content) || story.content.length < 3) {
-      issues.push({ level: 'warning', message: `${label}: content should contain at least 3 paragraphs.` });
+    if (!story.title.trim()) {
+      issues.push({
+        level: 'error',
+        message: `${label}: title is required.`,
+      });
+    }
+
+    if (!story.summary.trim()) {
+      issues.push({
+        level: 'error',
+        message: `${label}: summary is required.`,
+      });
+    }
+
+    if (!story.impact.trim()) {
+      issues.push({
+        level: 'warning',
+        message: `${label}: impact is empty.`,
+      });
+    }
+
+    if (!story.whyItMatters.trim()) {
+      issues.push({
+        level: 'warning',
+        message: `${label}: whyItMatters is empty.`,
+      });
+    }
+
+    if (!Array.isArray(story.content) || story.content.length < 3) {
+      issues.push({
+        level: 'warning',
+        message: `${label}: content should contain at least 3 paragraphs.`,
+      });
     } else {
       story.content.forEach((paragraph, pIndex) => {
         if (!String(paragraph ?? '').trim()) {
-          issues.push({ level: 'warning', message: `${label}: paragraph ${pIndex + 1} is empty.` });
+          issues.push({
+            level: 'warning',
+            message: `${label}: paragraph ${pIndex + 1} is empty.`,
+          });
         }
       });
     }
 
-    if (!Array.isArray(story?.keyPoints) || story.keyPoints.length < 3) {
-      issues.push({ level: 'warning', message: `${label}: keyPoints should contain at least 3 entries.` });
+    if (!Array.isArray(story.keyPoints) || story.keyPoints.length < 3) {
+      issues.push({
+        level: 'warning',
+        message: `${label}: keyPoints should contain at least 3 entries.`,
+      });
     } else {
       story.keyPoints.forEach((point, kIndex) => {
         if (!String(point ?? '').trim()) {
-          issues.push({ level: 'warning', message: `${label}: key point ${kIndex + 1} is empty.` });
+          issues.push({
+            level: 'warning',
+            message: `${label}: key point ${kIndex + 1} is empty.`,
+          });
         }
       });
     }
@@ -127,37 +227,13 @@ function validatePayload(payload: any): ValidationIssue[] {
   return issues;
 }
 
-function sanitizePayload(raw: any) {
-  const stories = Array.isArray(raw?.news) ? raw.news : [];
-
-  return {
-    date: String(raw?.date ?? '').trim(),
-    title: String(raw?.title ?? '').trim(),
-    subtitle: String(raw?.subtitle ?? '').trim(),
-    coverImage: String(raw?.coverImage ?? '').trim(),
-    news: stories.map((story: Story, index: number) => ({
-      id: Number(story?.id ?? index + 1),
-      title: String(story?.title ?? '').trim(),
-      summary: String(story?.summary ?? '').trim(),
-      impact: String(story?.impact ?? '').trim(),
-      whyItMatters: String(story?.whyItMatters ?? '').trim(),
-      content: Array.isArray(story?.content)
-        ? story.content.map((item) => String(item ?? '').trim())
-        : [],
-      keyPoints: Array.isArray(story?.keyPoints)
-        ? story.keyPoints.map((item) => String(item ?? '').trim())
-        : [],
-    })),
-  };
-}
-
-function getPublishChecklist(payload: any, issues: ValidationIssue[]) {
-  const storyCount = Array.isArray(payload?.news) ? payload.news.length : 0;
+function getPublishChecklist(payload: NewsPayload, issues: ValidationIssue[]): PublishCheck[] {
+  const storyCount = Array.isArray(payload.news) ? payload.news.length : 0;
   const errors = issues.filter((item) => item.level === 'error').length;
   const warnings = issues.filter((item) => item.level === 'warning').length;
-  const date = String(payload?.date ?? '').trim();
+  const date = payload.date.trim();
   const expectedCover = date ? `/covers/${date}-cover.jpg` : '';
-  const actualCover = String(payload?.coverImage ?? '').trim();
+  const actualCover = payload.coverImage.trim();
 
   return [
     {
@@ -193,13 +269,14 @@ function getPublishChecklist(payload: any, issues: ValidationIssue[]) {
   ];
 }
 
-function buildPublishPack(payload: any) {
-  const date = String(payload?.date ?? '').trim() || 'YYYY-MM-DD';
+function buildPublishPack(payload: NewsPayload) {
+  const date = payload.date.trim() || 'YYYY-MM-DD';
   const jsonFilename = `news-${date}.json`;
   const jsonRepoPath = `data/${jsonFilename}`;
-  const coverWebPath = String(payload?.coverImage ?? '').trim() || `/covers/${date}-cover.jpg`;
-  const coverPublicPath = coverWebPath.startsWith('/') ? `public${coverWebPath}` : `public/${coverWebPath}`;
-  const manifestNote = `Set data/manifest.json -> defaultDate to "${date}" when this becomes the live day.`;
+  const coverWebPath = payload.coverImage.trim() || `/covers/${date}-cover.jpg`;
+  const coverPublicPath = coverWebPath.startsWith('/')
+    ? `public${coverWebPath}`
+    : `public/${coverWebPath}`;
 
   return {
     date,
@@ -207,7 +284,7 @@ function buildPublishPack(payload: any) {
     jsonRepoPath,
     coverWebPath,
     coverPublicPath,
-    manifestNote,
+    manifestNote: `Set data/manifest.json -> defaultDate to "${date}" when this becomes the live day.`,
     steps: [
       `Download ${jsonFilename} from this admin page.`,
       `Place ${jsonFilename} into ${jsonRepoPath}.`,
@@ -221,71 +298,71 @@ function buildPublishPack(payload: any) {
 }
 
 export default function AdminPage() {
-  const defaultPayload = getLatestPayload();
+  const latest = sanitizePayload(getLatestPayload());
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [selectedDate, setSelectedDate] = useState(defaultPayload.date);
+
+  const [selectedDate, setSelectedDate] = useState(latest.date);
   const [draftDate, setDraftDate] = useState('');
-  const [payload, setPayload] = useState(() => JSON.stringify(defaultPayload, null, 2));
+  const [payloadText, setPayloadText] = useState<string>(JSON.stringify(latest, null, 2));
   const [mode, setMode] = useState<'form' | 'json'>('form');
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState('Ready');
   const [coverHintDismissed, setCoverHintDismissed] = useState(false);
 
-  const parsed = useMemo(() => {
+  const parsed = useMemo<NewsPayload | null>(() => {
     try {
-      return JSON.parse(payload);
+      return sanitizePayload(JSON.parse(payloadText));
     } catch {
       return null;
     }
-  }, [payload]);
+  }, [payloadText]);
 
-  const validationIssues = useMemo(
-    () => (parsed ? validatePayload(parsed) : [{ level: 'error', message: 'JSON is invalid.' }]),
-    [parsed]
-  );
+  const validationIssues = useMemo<ValidationIssue[]>(() => {
+    if (!parsed) {
+      return [{ level: 'error', message: 'JSON is invalid.' }];
+    }
+    return validatePayload(parsed);
+  }, [parsed]);
 
-  const publishChecks = useMemo(
-    () => (parsed ? getPublishChecklist(parsed, validationIssues) : []),
-    [parsed, validationIssues]
-  );
+  const publishChecks = useMemo<PublishCheck[]>(() => {
+    if (!parsed) {
+      return [];
+    }
+    return getPublishChecklist(parsed, validationIssues);
+  }, [parsed, validationIssues]);
 
-  const publishPack = useMemo(
-    () => buildPublishPack(parsed ?? {}),
-    [parsed]
-  );
+  const publishPack = useMemo(() => buildPublishPack(parsed ?? createEmptyPayload()), [parsed]);
 
   const errorCount = validationIssues.filter((item) => item.level === 'error').length;
   const warningCount = validationIssues.filter((item) => item.level === 'warning').length;
   const checklistDone = publishChecks.filter((item) => item.ok).length;
-  const coverDate = String(parsed?.date ?? '').trim();
-  const recommendedCoverPath = coverDate ? `/covers/${coverDate}-cover.jpg` : '/covers/YYYY-MM-DD-cover.jpg';
+  const recommendedCoverPath = parsed?.date
+    ? `/covers/${parsed.date}-cover.jpg`
+    : '/covers/YYYY-MM-DD-cover.jpg';
 
-  const stories: Story[] =
-    parsed?.news ?? Array.from({ length: 9 }, (_, idx) => createEmptyStory(idx + 1));
+  const stories = parsed?.news ?? createEmptyPayload().news;
 
-  function updatePayload(nextPayload: any) {
+  function updatePayload(nextPayload: NewsPayload) {
     const sanitized = sanitizePayload(nextPayload);
-    setPayload(JSON.stringify(sanitized, null, 2));
+    setPayloadText(JSON.stringify(sanitized, null, 2));
   }
 
   function loadDate(date: string) {
-    const nextPayload = getPayloadByDate(date);
+    const nextPayload = sanitizePayload(getPayloadByDate(date));
     setSelectedDate(date);
+    setPayloadText(JSON.stringify(nextPayload, null, 2));
     setStatus(`Loaded ${date}`);
-    setPayload(JSON.stringify(nextPayload, null, 2));
     setCoverHintDismissed(false);
+  }
+
+  function patchField<K extends keyof NewsPayload>(field: K, value: NewsPayload[K]) {
+    if (!parsed) return;
+    updatePayload({ ...parsed, [field]: value });
   }
 
   function patchStory(id: number, updater: (story: Story) => Story) {
     if (!parsed) return;
-    const nextStories = (parsed.news ?? []).map((story: Story) =>
-      story.id === id ? updater(story) : story
-    );
+    const nextStories = parsed.news.map((story) => (story.id === id ? updater(story) : story));
     updatePayload({ ...parsed, news: nextStories });
-  }
-
-  function patchField(field: string, value: string) {
-    if (!parsed) return;
-    updatePayload({ ...parsed, [field]: value });
   }
 
   function applyRecommendedCoverPath() {
@@ -294,24 +371,15 @@ export default function AdminPage() {
     setStatus(`Cover path set to ${recommendedCoverPath}`);
   }
 
-  function downloadJson(pretty = true) {
+  function normalizeJson() {
     if (!parsed) return;
-    const cleanPayload = sanitizePayload(parsed);
-    const text = JSON.stringify(cleanPayload, null, pretty ? 2 : 0);
-    const safeDate = cleanPayload.date || selectedDate || 'draft';
-    const blob = new Blob([text], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `news-${safeDate}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-    setStatus(`Downloaded news-${safeDate}.json`);
+    updatePayload(parsed);
+    setStatus('JSON normalized and cleaned');
   }
 
   async function copyJson() {
     try {
-      await navigator.clipboard.writeText(payload);
+      await navigator.clipboard.writeText(payloadText);
       setStatus('JSON copied to clipboard');
     } catch {
       setStatus('Clipboard copy failed');
@@ -336,10 +404,18 @@ export default function AdminPage() {
     }
   }
 
-  function normalizeJson() {
+  function downloadJson(pretty = true) {
     if (!parsed) return;
-    updatePayload(parsed);
-    setStatus('JSON normalized and cleaned');
+    const text = JSON.stringify(parsed, null, pretty ? 2 : 0);
+    const safeDate = parsed.date || selectedDate || 'draft';
+    const blob = new Blob([text], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `news-${safeDate}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setStatus(`Downloaded news-${safeDate}.json`);
   }
 
   function startNewDraft() {
@@ -347,10 +423,10 @@ export default function AdminPage() {
       setStatus('Draft date must be in YYYY-MM-DD format');
       return;
     }
-    const source = parsed ?? defaultPayload;
-    const draft = makeDraftFromDate(draftDate, source);
+
+    const draft = makeDraftFromDate(draftDate, parsed ?? latest);
     setSelectedDate(draftDate);
-    setPayload(JSON.stringify(draft, null, 2));
+    setPayloadText(JSON.stringify(draft, null, 2));
     setStatus(`New draft created for ${draftDate}`);
     setCoverHintDismissed(false);
   }
@@ -361,10 +437,10 @@ export default function AdminPage() {
 
     try {
       const text = await file.text();
-      const imported = JSON.parse(text);
-      updatePayload(imported);
-      if (imported?.date) {
-        setSelectedDate(String(imported.date));
+      const imported = sanitizePayload(JSON.parse(text));
+      setPayloadText(JSON.stringify(imported, null, 2));
+      if (imported.date) {
+        setSelectedDate(imported.date);
       }
       setStatus(`Imported ${file.name}`);
       setCoverHintDismissed(false);
@@ -388,8 +464,9 @@ export default function AdminPage() {
             <span className="eyebrow">Admin-friendly editor</span>
             <h1>Stable MVP operator panel</h1>
             <p>
-              Create or import a daily dataset, validate it, fix the cover path, review the publish pack,
-              and use this panel as the stable day-to-day workflow for the first production MVP.
+              Create or import a daily dataset, validate it, fix the cover path, review the publish
+              pack, and use this panel as the stable day-to-day workflow for the first production
+              MVP.
             </p>
           </div>
 
@@ -409,12 +486,21 @@ export default function AdminPage() {
             <button className="story-cta secondary" onClick={() => fileInputRef.current?.click()}>
               Import JSON
             </button>
-            <button className="story-cta secondary" onClick={() => setMode(mode === 'form' ? 'json' : 'form')}>
+            <button
+              className="story-cta secondary"
+              onClick={() => setMode(mode === 'form' ? 'json' : 'form')}
+            >
               Switch to {mode === 'form' ? 'JSON' : 'Form'}
             </button>
-            <button className="story-cta secondary" onClick={normalizeJson}>Normalize JSON</button>
-            <button className="story-cta secondary" onClick={copyJson}>Copy JSON</button>
-            <button className="story-cta primary" onClick={() => downloadJson(true)}>Download JSON</button>
+            <button className="story-cta secondary" onClick={normalizeJson}>
+              Normalize JSON
+            </button>
+            <button className="story-cta secondary" onClick={copyJson}>
+              Copy JSON
+            </button>
+            <button className="story-cta primary" onClick={() => downloadJson(true)}>
+              Download JSON
+            </button>
 
             <input
               ref={fileInputRef}
@@ -447,74 +533,17 @@ export default function AdminPage() {
               <span className={warningCount > 0 ? 'admin-badge warn' : 'admin-badge ok'}>
                 Warnings: {warningCount}
               </span>
-              <span className={checklistDone === publishChecks.length ? 'admin-badge ok' : 'admin-badge warn'}>
+              <span
+                className={
+                  checklistDone === publishChecks.length ? 'admin-badge ok' : 'admin-badge warn'
+                }
+              >
                 Checklist: {checklistDone}/{publishChecks.length}
               </span>
             </div>
-            <div className="subtle">{status || 'Ready'}</div>
+            <div className="subtle">{status}</div>
           </div>
         </section>
-
-        <section className="admin-two-col">
-          <section className="admin-panel">
-            <div className="admin-panel-head">
-              <h2>Cover image helper</h2>
-              <button className="story-cta secondary small" onClick={applyRecommendedCoverPath}>
-                Apply recommended path
-              </button>
-            </div>
-
-            {!coverHintDismissed && (
-              <div className="cover-helper-box">
-                <div>
-                  <strong>Recommended path:</strong> <code>{recommendedCoverPath}</code>
-                </div>
-                <div className="cover-helper-actions">
-                  <button className="story-cta secondary small" onClick={applyRecommendedCoverPath}>
-                    Use this path
-                  </button>
-                  <button className="story-cta secondary small" onClick={() => setCoverHintDismissed(true)}>
-                    Hide
-                  </button>
-                </div>
-              </div>
-            )}
-
-            <div className="cover-helper-grid">
-              <div className="cover-helper-item">
-                <span className="subtle">Current JSON value</span>
-                <code>{String(parsed?.coverImage ?? 'Missing')}</code>
-              </div>
-              <div className="cover-helper-item">
-                <span className="subtle">Expected file</span>
-                <code>{recommendedCoverPath}</code>
-              </div>
-              <div className="cover-helper-item">
-                <span className="subtle">Public folder target</span>
-                <code>{`public${recommendedCoverPath}`}</code>
-              </div>
-              <div className="cover-helper-item">
-                <span className="subtle">Reminder</span>
-                <p>Export JSON, then place your generated cover image into the matching file path before publish.</p>
-              </div>
-            </div>
-          </section>
-
-          <section className="admin-panel">
-            <h2>Publish checklist</h2>
-            <div className="checklist-list">
-              {publishChecks.map((item) => (
-                <div key={item.label} className={item.ok ? 'checklist-item ok' : 'checklist-item pending'}>
-                  <div className="checklist-top">
-                    <strong>{item.ok ? '✓' : '•'} {item.label}</strong>
-                  </div>
-                  <div className="subtle">{item.detail}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-        </section>
-
 
         <section className="admin-panel production-lock-panel">
           <div className="admin-panel-head">
@@ -539,6 +568,74 @@ export default function AdminPage() {
               <strong>First stable production MVP</strong>
             </div>
           </div>
+        </section>
+
+        <section className="admin-two-col">
+          <section className="admin-panel">
+            <div className="admin-panel-head">
+              <h2>Cover image helper</h2>
+              <button className="story-cta secondary small" onClick={applyRecommendedCoverPath}>
+                Apply recommended path
+              </button>
+            </div>
+
+            {!coverHintDismissed && (
+              <div className="cover-helper-box">
+                <div>
+                  <strong>Recommended path:</strong> <code>{recommendedCoverPath}</code>
+                </div>
+                <div className="cover-helper-actions">
+                  <button className="story-cta secondary small" onClick={applyRecommendedCoverPath}>
+                    Use this path
+                  </button>
+                  <button
+                    className="story-cta secondary small"
+                    onClick={() => setCoverHintDismissed(true)}
+                  >
+                    Hide
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="cover-helper-grid">
+              <div className="cover-helper-item">
+                <span className="subtle">Current JSON value</span>
+                <code>{parsed?.coverImage || 'Missing'}</code>
+              </div>
+              <div className="cover-helper-item">
+                <span className="subtle">Expected file</span>
+                <code>{recommendedCoverPath}</code>
+              </div>
+              <div className="cover-helper-item">
+                <span className="subtle">Public folder target</span>
+                <code>{`public${recommendedCoverPath}`}</code>
+              </div>
+              <div className="cover-helper-item">
+                <span className="subtle">Reminder</span>
+                <p>
+                  Export JSON, then place your generated cover image into the matching file path
+                  before publish.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="admin-panel">
+            <h2>Publish checklist</h2>
+            <div className="checklist-list">
+              {publishChecks.map((item) => (
+                <div key={item.label} className={item.ok ? 'checklist-item ok' : 'checklist-item pending'}>
+                  <div className="checklist-top">
+                    <strong>
+                      {item.ok ? '✓' : '•'} {item.label}
+                    </strong>
+                  </div>
+                  <div className="subtle">{item.detail}</div>
+                </div>
+              ))}
+            </div>
+          </section>
         </section>
 
         <section className="admin-panel">
@@ -611,19 +708,25 @@ export default function AdminPage() {
               <div className="admin-grid">
                 <label className="admin-field">
                   <span>Date</span>
-                  <input value={parsed.date ?? ''} onChange={(e) => patchField('date', e.target.value)} />
+                  <input value={parsed.date} onChange={(e) => patchField('date', e.target.value)} />
                 </label>
                 <label className="admin-field">
                   <span>Title</span>
-                  <input value={parsed.title ?? ''} onChange={(e) => patchField('title', e.target.value)} />
+                  <input value={parsed.title} onChange={(e) => patchField('title', e.target.value)} />
                 </label>
                 <label className="admin-field admin-field-wide">
                   <span>Subtitle</span>
-                  <input value={parsed.subtitle ?? ''} onChange={(e) => patchField('subtitle', e.target.value)} />
+                  <input
+                    value={parsed.subtitle}
+                    onChange={(e) => patchField('subtitle', e.target.value)}
+                  />
                 </label>
                 <label className="admin-field admin-field-wide">
                   <span>Cover image path</span>
-                  <input value={parsed.coverImage ?? ''} onChange={(e) => patchField('coverImage', e.target.value)} />
+                  <input
+                    value={parsed.coverImage}
+                    onChange={(e) => patchField('coverImage', e.target.value)}
+                  />
                 </label>
               </div>
             </section>
@@ -641,7 +744,9 @@ export default function AdminPage() {
                       <span>Title</span>
                       <input
                         value={story.title}
-                        onChange={(e) => patchStory(story.id, (current) => ({ ...current, title: e.target.value }))}
+                        onChange={(e) =>
+                          patchStory(story.id, (current) => ({ ...current, title: e.target.value }))
+                        }
                       />
                     </label>
 
@@ -650,7 +755,9 @@ export default function AdminPage() {
                       <textarea
                         rows={3}
                         value={story.summary}
-                        onChange={(e) => patchStory(story.id, (current) => ({ ...current, summary: e.target.value }))}
+                        onChange={(e) =>
+                          patchStory(story.id, (current) => ({ ...current, summary: e.target.value }))
+                        }
                       />
                     </label>
 
@@ -658,7 +765,9 @@ export default function AdminPage() {
                       <span>Impact</span>
                       <input
                         value={story.impact}
-                        onChange={(e) => patchStory(story.id, (current) => ({ ...current, impact: e.target.value }))}
+                        onChange={(e) =>
+                          patchStory(story.id, (current) => ({ ...current, impact: e.target.value }))
+                        }
                       />
                     </label>
 
@@ -667,7 +776,12 @@ export default function AdminPage() {
                       <textarea
                         rows={3}
                         value={story.whyItMatters}
-                        onChange={(e) => patchStory(story.id, (current) => ({ ...current, whyItMatters: e.target.value }))}
+                        onChange={(e) =>
+                          patchStory(story.id, (current) => ({
+                            ...current,
+                            whyItMatters: e.target.value,
+                          }))
+                        }
                       />
                     </label>
 
@@ -715,8 +829,8 @@ export default function AdminPage() {
             <h2>Raw JSON</h2>
             <textarea
               className="admin-json"
-              value={payload}
-              onChange={(e) => setPayload(e.target.value)}
+              value={payloadText}
+              onChange={(e) => setPayloadText(e.target.value)}
             />
           </section>
         )}
