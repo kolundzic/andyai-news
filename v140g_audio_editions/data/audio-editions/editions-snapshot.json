@@ -1,0 +1,31 @@
+{
+  "version": "v1.4.0-g",
+  "edition_id": "2026-03-22-main",
+  "day": "2026-03-22",
+  "items": [
+    {
+      "audio_edition_id": "audedition_2026-03-22_2026-03-22-main_en",
+      "locale": "en",
+      "role": "daily_brief",
+      "readiness_state": "published",
+      "fallback_mode": "none",
+      "voice_profile": "neutral_news_en_01"
+    },
+    {
+      "audio_edition_id": "audedition_2026-03-22_2026-03-22-main_sr",
+      "locale": "sr",
+      "role": "daily_brief",
+      "readiness_state": "review",
+      "fallback_mode": "transcript_only",
+      "voice_profile": "neutral_news_sr_01"
+    },
+    {
+      "audio_edition_id": "audedition_2026-03-22_2026-03-22-main_jp",
+      "locale": "jp",
+      "role": "daily_brief",
+      "readiness_state": "queued",
+      "fallback_mode": "transcript_only",
+      "voice_profile": "neutral_news_jp_01"
+    }
+  ]
+}
