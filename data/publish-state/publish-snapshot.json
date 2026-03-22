@@ -1,0 +1,57 @@
+{
+  "version": "v1.3.0-a",
+  "title": "Publish State & Release Discipline",
+  "production_lane": "/admin",
+  "preview_lane": "/admin/v110a",
+  "release_discipline": [
+    "Public delivery is not the same as preview readiness.",
+    "Preview lane remains isolated for regression checks and controlled upgrades.",
+    "Only approved sections should advance toward published release surfaces.",
+    "Production lane carries explicit state instead of implicit operator assumptions."
+  ],
+  "states": [
+    "draft",
+    "review_ready",
+    "approved",
+    "scheduled",
+    "published",
+    "withdrawn"
+  ],
+  "items": [
+    {
+      "section": "Dashboard",
+      "state": "approved",
+      "release_track": "production",
+      "route": "/admin",
+      "notes": "Central production dashboard is now under explicit release discipline."
+    },
+    {
+      "section": "History",
+      "state": "review_ready",
+      "release_track": "production",
+      "route": "/admin/history",
+      "notes": "Archive / history lane is ready for stricter publish-state handling."
+    },
+    {
+      "section": "Locales",
+      "state": "review_ready",
+      "release_track": "production",
+      "route": "/admin/locales",
+      "notes": "Locale-aware structure is tracked under release-grade state transitions."
+    },
+    {
+      "section": "Newsletter",
+      "state": "approved",
+      "release_track": "production",
+      "route": "/admin/newsletter",
+      "notes": "Newsletter binding is ready to connect into later delivery integration."
+    },
+    {
+      "section": "Voice Prep",
+      "state": "draft",
+      "release_track": "preview",
+      "route": "/admin/voice",
+      "notes": "Voice prep stays controlled while delivery hooks and audio publishing are staged later."
+    }
+  ]
+}
