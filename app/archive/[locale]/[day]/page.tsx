@@ -1,90 +1,90 @@
 import Link from "next/link";
-import {
-  buildArchiveCards,
-  buildArchiveMeta,
-  getPublicUiFoundation,
-  joinClasses,
-} from "@/lib/public-ui/helpers";
 
-type PageProps = {
-  params: {
-    locale: string;
-    day: string;
-  };
-};
-
-export default function ArchiveDayPage({ params }: PageProps) {
-  const { locale, day } = params;
-  const ui = getPublicUiFoundation();
-  const meta = buildArchiveMeta(locale, day);
-  const cards = buildArchiveCards(locale, day);
+export default async function ArchiveDayPage({
+  params,
+}: {
+  params: Promise<{ locale: string; day: string }>;
+}) {
+  const { locale, day } = await params;
 
   return (
-    <main className="min-h-screen bg-black text-white">
-      <section className={joinClasses(ui.container, "py-10 sm:py-14")}>
-        <div className={joinClasses(ui.surface, "p-6 sm:p-8")}>
-          <div className="mb-6 flex flex-wrap items-center gap-3">
-            {meta.map((item) => (
-              <span key={item.label} className={ui.pill}>
-                <strong className="mr-2 font-medium text-zinc-100">{item.label}:</strong>
-                <span>{item.value}</span>
-              </span>
-            ))}
+    <main className="min-h-screen bg-[#081b33] text-white">
+      <section className="mx-auto max-w-5xl px-6 py-14">
+        <div className="mb-6 flex flex-wrap gap-2">
+          <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
+            Archive
+          </span>
+          <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
+            {locale}
+          </span>
+          <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
+            {day}
+          </span>
+        </div>
+
+        <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
+          Archive view for {locale.toUpperCase()} on {day}
+        </h1>
+
+        <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
+          Cleaner archive layout with stronger reading hierarchy and direct bridges to edition, audio surface, and newsletter delivery.
+        </p>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <h2 className="text-lg font-semibold">Archive Reading</h2>
+            <p className="mt-3 text-sm leading-6 text-white/70">
+              Browse stored editorial states with clearer metadata rhythm.
+            </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-[1.25fr_0.95fr]">
-            <div>
-              <p className="mb-3 text-xs uppercase tracking-[0.24em] text-zinc-500">
-                AndyAI News Archive
-              </p>
-              <h1 className={ui.title}>
-                Archive View — {locale.toUpperCase()} / {day}
-              </h1>
-              <p className={joinClasses(ui.body, "mt-4 max-w-3xl")}>
-                This archive surface now has a cleaner visual hierarchy and clearer separation between
-                historical issue context, replay-oriented blocks, and return paths into the live edition flow.
-              </p>
-
-              <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                <h2 className="text-lg font-semibold text-white">Archive summary</h2>
-                <p className="mt-3 text-sm leading-7 text-zinc-300">
-                  The archive page is prepared to host stronger historical issue continuity, audio archive surfaces,
-                  and cleaner locale/day scanning without collapsing into a raw technical screen.
-                </p>
-              </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <h2 className="text-lg font-semibold">Audio Archive</h2>
+            <p className="mt-3 text-sm leading-6 text-white/70">
+              Audio archive, retention, and replay are part of the platform and ready for stronger public presentation.
+            </p>
+            <div className="mt-4">
+              <Link
+                href="/admin/audio/archive"
+                className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+              >
+                Open audio archive lane
+              </Link>
             </div>
+          </div>
 
-            <aside className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-5">
-              <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Archive lane</p>
-              <h2 className="mt-2 text-lg font-semibold text-white">Retention / Replay / Memory</h2>
-              <p className="mt-3 text-sm leading-7 text-zinc-200">
-                This block gives the archive route a clearer narrative around continuity, replay readiness,
-                and future audio archive growth.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <Link href="/admin/audio/archive" className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-black">
-                  Audio archive
-                </Link>
-                <Link href={`/${locale}/edition/${day}`} className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white">
-                  Back to edition
-                </Link>
-              </div>
-            </aside>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <h2 className="text-lg font-semibold">Newsletter Path</h2>
+            <p className="mt-3 text-sm leading-6 text-white/70">
+              Archive and delivery paths are now visually closer, improving understanding of the whole newsroom flow.
+            </p>
+            <div className="mt-4">
+              <Link
+                href="/admin/newsletter/delivery"
+                className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+              >
+                Open newsletter delivery
+              </Link>
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {cards.map((card) => (
-            <div key={card.title} className={ui.card}>
-              <h3 className="text-base font-semibold text-white">{card.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-300">{card.body}</p>
-              {card.href ? (
-                <Link href={card.href} className="mt-5 inline-flex text-sm font-medium text-emerald-300 hover:text-emerald-200">
-                  {card.cta ?? "Open"}
-                </Link>
-              ) : null}
-            </div>
-          ))}
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6">
+          <h2 className="text-xl font-semibold">Archive Navigation</h2>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link
+              href={`/` }
+              className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+            >
+              Home
+            </Link>
+            <Link
+              href={`/${locale}/edition/${day}`}
+              className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+            >
+              Open edition view
+            </Link>
+          </div>
         </div>
       </section>
     </main>

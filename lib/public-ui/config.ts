@@ -1,17 +1,35 @@
-export const PUBLIC_UI_CONTAINER =
-  "mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8";
+import type { PublicUiCtaCard, PublicUiSurfaceContent } from "@/lib/public-ui/types";
 
-export const PUBLIC_UI_SURFACE =
-  "rounded-2xl border border-white/10 bg-zinc-950/70 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]";
+export const PUBLIC_UI_SURFACE: PublicUiSurfaceContent = {
+  badge: "AndyAI News",
+  title: "AI news delivery, archive, newsletter, and audio surfaces",
+  description:
+    "A cleaner public layer for editions, archive reading, newsletter prompts, and the growing audio production lane.",
+};
 
-export const PUBLIC_UI_CARD =
-  "rounded-2xl border border-white/10 bg-zinc-950/70 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.25)]";
-
-export const PUBLIC_UI_META_PILL =
-  "inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-wide text-zinc-300";
-
-export const PUBLIC_UI_TITLE =
-  "text-2xl font-semibold tracking-tight text-white sm:text-3xl";
-
-export const PUBLIC_UI_BODY =
-  "text-sm leading-7 text-zinc-300 sm:text-base";
+export const HOMEPAGE_CTA_CARDS: PublicUiCtaCard[] = [
+  {
+    title: "Latest Edition",
+    description: "Open the latest public edition page with cleaner hierarchy and stronger reading flow.",
+    href: "/en/edition/2026-03-22",
+    cta: "Open edition",
+  },
+  {
+    title: "Archive",
+    description: "Browse the archive surface by locale and day with a more readable public layout.",
+    href: "/archive/en/2026-03-22",
+    cta: "Open archive",
+  },
+  {
+    title: "Audio Lane",
+    description: "Jump into the audio production lane now connected to queue, storage, transcript, approval, and archive.",
+    href: "/admin/audio/queue",
+    cta: "Open audio lane",
+  },
+  {
+    title: "Newsletter",
+    description: "Review the newsletter delivery surface and tighter publishing bridge for outbound issues.",
+    href: "/admin/newsletter/delivery",
+    cta: "Open newsletter lane",
+  },
+];
