@@ -26,34 +26,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-white/10 bg-white/[0.03]">
-        <div className="mx-auto grid max-w-6xl gap-4 px-6 py-6 md:grid-cols-[1.4fr_0.8fr]">
-          <div>
-            <div className="mb-2 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-cyan-200">
-              Public reading surface
-            </div>
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Story-first AI and tech briefing, organized for fast reading
-            </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-base">
-              AndyAI News is designed as a clean public surface for editions, archive browsing, and focused story reading.
-              Use the navigation above to move between the latest reading flow and archived daily views.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="text-xs uppercase tracking-[0.18em] text-white/50">
-              Reader flow
-            </div>
-            <div className="mt-3 space-y-3 text-sm text-white/75">
-              <p>1. Enter from the homepage</p>
-              <p>2. Open an edition or archive view</p>
-              <p>3. Read stories in sequence with clear next steps</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mb-10 max-w-4xl">
           <div className="mb-3 inline-flex rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-white/80">
@@ -73,9 +45,6 @@ export default function HomePage() {
               key={card.title}
               className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]"
             >
-              <div className="mb-3 text-xs uppercase tracking-[0.18em] text-white/50">
-                Public destination
-              </div>
               <h2 className="text-xl font-semibold">{card.title}</h2>
               <p className="mt-3 text-sm leading-6 text-white/70">{card.description}</p>
               <div className="mt-5">

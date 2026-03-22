@@ -12,7 +12,6 @@ export default async function EditionPage({
 }) {
   const { locale, day } = await params;
   const nav = getPublicUiPrimaryNav();
-  const localeLabel = `${locale.toUpperCase()} edition`;
 
   return (
     <main className="min-h-screen bg-[#07172d] text-white">
@@ -32,11 +31,11 @@ export default async function EditionPage({
 
       <section className="mx-auto max-w-5xl px-6 py-14">
         <div className="mb-6 flex flex-wrap gap-2">
-          <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-cyan-200">
-            Public edition
+          <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
+            Edition
           </span>
           <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
-            {localeLabel}
+            {locale}
           </span>
           <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
             {day}
@@ -44,50 +43,49 @@ export default async function EditionPage({
         </div>
 
         <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
-          Daily edition for {locale.toUpperCase()} on {day}
+          Edition surface for {locale.toUpperCase()} on {day}
         </h1>
 
         <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
-          This public edition view is the entry point for story reading, archive continuity, and day-specific browsing across the selected locale.
+          A more consistent edition layout with clearer reading rhythm, stronger metadata treatment, and better bridges to archive, audio, and newsletter surfaces.
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="mb-2 text-xs uppercase tracking-[0.18em] text-white/50">
-              Read now
-            </div>
-            <h2 className="text-lg font-semibold">Edition reading flow</h2>
+            <h2 className="text-lg font-semibold">Read</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Use this surface as the public starting point for the selected day and locale.
+              Structured editorial reading flow for the selected locale and day.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="mb-2 text-xs uppercase tracking-[0.18em] text-white/50">
-              Browse
-            </div>
-            <h2 className="text-lg font-semibold">Archive continuity</h2>
+            <h2 className="text-lg font-semibold">Audio</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Move from the current edition into the archive view without losing locale and day context.
+              Audio production and delivery now sit closer to the public reading surface.
             </p>
             <div className="mt-4">
               <Link
-                href={getLocaleArchiveHref(locale, day)}
+                href="/admin/audio/player"
                 className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
               >
-                Open archive view
+                Open audio surface
               </Link>
             </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="mb-2 text-xs uppercase tracking-[0.18em] text-white/50">
-              Orientation
-            </div>
-            <h2 className="text-lg font-semibold">Locale-aware reading</h2>
+            <h2 className="text-lg font-semibold">Newsletter</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              The edition surface now makes locale and day context more visible for readers arriving directly on this route.
+              Delivery lane is now easier to discover from the main public edition flow.
             </p>
+            <div className="mt-4">
+              <Link
+                href="/admin/newsletter/delivery"
+                className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+              >
+                Open newsletter
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -96,19 +94,19 @@ export default async function EditionPage({
             href="/"
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Back home
+            Home
           </Link>
           <Link
             href={getLocaleArchiveHref(locale, day)}
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Browse archive
+            Archive view
           </Link>
           <Link
             href={getLocaleEditionHref(locale, day)}
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Refresh edition
+            Refresh edition route
           </Link>
         </div>
       </section>
