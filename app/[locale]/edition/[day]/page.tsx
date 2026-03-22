@@ -1,3 +1,11 @@
+import Link from "next/link";
+import {
+  buildEditionCards,
+  buildEditionMeta,
+  getPublicUiFoundation,
+  joinClasses,
+} from "@/lib/public-ui/helpers";
+
 type PageProps = {
   params: {
     locale: string;
@@ -5,68 +13,83 @@ type PageProps = {
   };
 };
 
-function localeLabel(locale: string): string {
-  if (locale === "en") return "English";
-  if (locale === "sr") return "Serbian";
-  if (locale === "jp") return "Japanese";
-  return locale.toUpperCase();
-}
-
-export default function EditionPage({ params }: PageProps) {
-  const pill =
-    "inline-flex rounded-full border border-white/15 bg-white/8 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200";
+export default function LocaleEditionPage({ params }: PageProps) {
+  const { locale, day } = params;
+  const ui = getPublicUiFoundation();
+  const meta = buildEditionMeta(locale, day);
+  const cards = buildEditionCards(locale, day);
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,_#071321_0%,_#050913_100%)] px-6 py-10 text-white">
-      <div className="mx-auto max-w-5xl">
-        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/20 backdrop-blur-md">
-          <div className="flex flex-wrap gap-3">
-            <span className={pill}>{localeLabel(params.locale)}</span>
-            <span className={pill}>{params.day}</span>
-            <span className={pill}>Edition</span>
+    <main className="min-h-screen bg-black text-white">
+      <section className={joinClasses(ui.container, "py-10 sm:py-14")}>
+        <div className={joinClasses(ui.surface, "overflow-hidden p-6 sm:p-8")}>
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            {meta.map((item) => (
+              <span key={item.label} className={ui.pill}>
+                <strong className="mr-2 font-medium text-zinc-100">{item.label}:</strong>
+                <span>{item.value}</span>
+              </span>
+            ))}
           </div>
 
-          <h1 className="mt-6 text-4xl font-semibold leading-tight">
-            AndyAI News — {localeLabel(params.locale)} edition
-          </h1>
-
-          <p className="mt-4 max-w-3xl text-base leading-8 text-slate-300">
-            This polished public edition surface is prepared for locale-specific publishing, newsletter binding, archive compatibility, and the audio-ready newsroom flow.
-          </p>
-
-          <div className="mt-8 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-            <section className="rounded-[1.5rem] border border-white/10 bg-white/6 p-6">
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-300">Featured brief</p>
-              <h2 className="mt-3 text-2xl font-semibold">Daily AI signal digest</h2>
-              <p className="mt-4 text-sm leading-7 text-slate-300">
-                Public edition cards now sit inside a cleaner visual frame with stronger spacing, clearer typography, and room for future article summaries, issue sections, and direct listen actions.
+          <div className="grid gap-8 lg:grid-cols-[1.4fr_0.8fr]">
+            <div>
+              <p className="mb-3 text-xs uppercase tracking-[0.24em] text-zinc-500">
+                AndyAI News Public Edition
               </p>
-              <div className="mt-6 grid gap-3 md:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-sm font-semibold text-white">Newsletter-ready</div>
-                  <div className="mt-2 text-sm leading-7 text-slate-300">Prepared for delivery-grade payloads and public CTA blocks.</div>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-sm font-semibold text-white">Audio-ready</div>
-                  <div className="mt-2 text-sm leading-7 text-slate-300">Player card slot reserved for queue, transcript, approval, and archive lanes.</div>
-                </div>
+              <h1 className={ui.title}>
+                {locale.toUpperCase()} Edition — {day}
+              </h1>
+              <p className={joinClasses(ui.body, "mt-4 max-w-3xl")}>
+                This polished public edition surface gives the locale/day route a cleaner editorial rhythm,
+                stronger metadata presentation, and clearer spaces for audio, newsletter, and archive-aware blocks.
+              </p>
+
+              <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+                <h2 className="text-lg font-semibold text-white">Edition briefing</h2>
+                <p className="mt-3 text-sm leading-7 text-zinc-300">
+                  Today&apos;s edition page is now visually structured as a real public reading surface:
+                  cleaner headline hierarchy, clearer route context, and better separation between editorial content,
+                  delivery hooks, and future audio components.
+                </p>
               </div>
-            </section>
+            </div>
 
-            <aside className="rounded-[1.5rem] border border-cyan-400/20 bg-cyan-400/8 p-6">
-              <p className="text-sm uppercase tracking-[0.2em] text-cyan-200">Listen</p>
-              <h3 className="mt-3 text-xl font-semibold">Audio edition slot</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-200">
-                Public audio player styling comes next, but this surface now has a clear visual home for audio, transcript, and archive replay entry points.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a href="/admin/audio/player" className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15">Audio contract</a>
-                <a href={`/archive/${params.locale}/${params.day}`} className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15">Open archive</a>
+            <aside className="space-y-4">
+              <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-5">
+                <p className="text-xs uppercase tracking-[0.24em] text-cyan-200">Featured lane</p>
+                <h2 className="mt-2 text-lg font-semibold text-white">Listen / Deliver / Archive</h2>
+                <p className="mt-3 text-sm leading-7 text-zinc-200">
+                  This block is intentionally prepared for audio and newsletter calls-to-action without
+                  breaking the current public edition route.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <Link href="/admin/audio/player" className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-black">
+                    Audio preview
+                  </Link>
+                  <Link href={`/archive/${locale}/${day}`} className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white">
+                    Open archive
+                  </Link>
+                </div>
               </div>
             </aside>
           </div>
         </div>
-      </div>
+
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {cards.map((card) => (
+            <div key={card.title} className={ui.card}>
+              <h3 className="text-base font-semibold text-white">{card.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-zinc-300">{card.body}</p>
+              {card.href ? (
+                <Link href={card.href} className="mt-5 inline-flex text-sm font-medium text-cyan-300 hover:text-cyan-200">
+                  {card.cta ?? "Open"}
+                </Link>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

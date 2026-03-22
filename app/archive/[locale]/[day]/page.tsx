@@ -1,3 +1,11 @@
+import Link from "next/link";
+import {
+  buildArchiveCards,
+  buildArchiveMeta,
+  getPublicUiFoundation,
+  joinClasses,
+} from "@/lib/public-ui/helpers";
+
 type PageProps = {
   params: {
     locale: string;
@@ -5,64 +13,80 @@ type PageProps = {
   };
 };
 
-function localeLabel(locale: string): string {
-  if (locale === "en") return "English";
-  if (locale === "sr") return "Serbian";
-  if (locale === "jp") return "Japanese";
-  return locale.toUpperCase();
-}
-
 export default function ArchiveDayPage({ params }: PageProps) {
-  const block = "rounded-[1.5rem] border border-white/10 bg-white/5 p-6";
+  const { locale, day } = params;
+  const ui = getPublicUiFoundation();
+  const meta = buildArchiveMeta(locale, day);
+  const cards = buildArchiveCards(locale, day);
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,_#050b14_0%,_#02050a_100%)] px-6 py-10 text-white">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-8">
-          <div className="inline-flex rounded-full border border-white/15 bg-white/8 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200">
-            Archive / {localeLabel(params.locale)} / {params.day}
+    <main className="min-h-screen bg-black text-white">
+      <section className={joinClasses(ui.container, "py-10 sm:py-14")}>
+        <div className={joinClasses(ui.surface, "p-6 sm:p-8")}>
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            {meta.map((item) => (
+              <span key={item.label} className={ui.pill}>
+                <strong className="mr-2 font-medium text-zinc-100">{item.label}:</strong>
+                <span>{item.value}</span>
+              </span>
+            ))}
           </div>
-          <h1 className="mt-4 text-4xl font-semibold">Public archive day view</h1>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-slate-300">
-            This first polish pass makes archive browsing cleaner, calmer, and more magazine-like while preserving the structured route model introduced earlier.
-          </p>
-        </div>
 
-        <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-          <section className={block}>
-            <p className="text-sm uppercase tracking-[0.2em] text-slate-300">Archive summary</p>
-            <h2 className="mt-3 text-2xl font-semibold">Day snapshot</h2>
-            <p className="mt-4 text-sm leading-7 text-slate-300">
-              The archive surface is now framed as a public reading and replay destination, with a cleaner hierarchy for daily summaries, locale context, and future audio replay entry points.
-            </p>
-            <div className="mt-6 grid gap-3 md:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div className="text-sm font-semibold">Edition memory</div>
-                <div className="mt-2 text-sm leading-7 text-slate-300">Structured archive routes now sit inside a calmer public shell.</div>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div className="text-sm font-semibold">Audio replay slot</div>
-                <div className="mt-2 text-sm leading-7 text-slate-300">Prepared for replay, transcript, and retention surfaces.</div>
+          <div className="grid gap-8 lg:grid-cols-[1.25fr_0.95fr]">
+            <div>
+              <p className="mb-3 text-xs uppercase tracking-[0.24em] text-zinc-500">
+                AndyAI News Archive
+              </p>
+              <h1 className={ui.title}>
+                Archive View — {locale.toUpperCase()} / {day}
+              </h1>
+              <p className={joinClasses(ui.body, "mt-4 max-w-3xl")}>
+                This archive surface now has a cleaner visual hierarchy and clearer separation between
+                historical issue context, replay-oriented blocks, and return paths into the live edition flow.
+              </p>
+
+              <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+                <h2 className="text-lg font-semibold text-white">Archive summary</h2>
+                <p className="mt-3 text-sm leading-7 text-zinc-300">
+                  The archive page is prepared to host stronger historical issue continuity, audio archive surfaces,
+                  and cleaner locale/day scanning without collapsing into a raw technical screen.
+                </p>
               </div>
             </div>
-          </section>
 
-          <aside className={block}>
-            <p className="text-sm uppercase tracking-[0.2em] text-slate-300">Routes</p>
-            <div className="mt-4 space-y-3 text-sm text-slate-200">
-              <a className="block rounded-2xl border border-white/10 bg-black/20 p-4 hover:bg-black/30" href={`/${params.locale}/edition/${params.day}`}>
-                Public edition →
-              </a>
-              <a className="block rounded-2xl border border-white/10 bg-black/20 p-4 hover:bg-black/30" href="/admin/audio/archive">
-                Audio archive admin →
-              </a>
-              <a className="block rounded-2xl border border-white/10 bg-black/20 p-4 hover:bg-black/30" href="/admin">
-                Admin dashboard →
-              </a>
-            </div>
-          </aside>
+            <aside className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-5">
+              <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Archive lane</p>
+              <h2 className="mt-2 text-lg font-semibold text-white">Retention / Replay / Memory</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-200">
+                This block gives the archive route a clearer narrative around continuity, replay readiness,
+                and future audio archive growth.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link href="/admin/audio/archive" className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-black">
+                  Audio archive
+                </Link>
+                <Link href={`/${locale}/edition/${day}`} className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white">
+                  Back to edition
+                </Link>
+              </div>
+            </aside>
+          </div>
         </div>
-      </div>
+
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {cards.map((card) => (
+            <div key={card.title} className={ui.card}>
+              <h3 className="text-base font-semibold text-white">{card.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-zinc-300">{card.body}</p>
+              {card.href ? (
+                <Link href={card.href} className="mt-5 inline-flex text-sm font-medium text-emerald-300 hover:text-emerald-200">
+                  {card.cta ?? "Open"}
+                </Link>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

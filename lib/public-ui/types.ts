@@ -1,11 +1,19 @@
-export interface FeaturedCardData {
-  title: string;
-  description: string;
-  href: string;
-  badge?: string;
+export type PublicUiTone = "neutral" | "accent" | "muted";
+
+export interface PublicMetaItem {
+  label: string;
+  value: string;
 }
 
-export interface HomepageSectionData {
-  heading: string;
-  items: FeaturedCardData[];
+export interface PublicInfoCard {
+  title: string;
+  body: string;
+  href?: string;
+  cta?: string;
+}
+
+export interface PublicSectionHeader {
+  eyebrow?: string;
+  title: string;
+  description?: string;
 }
