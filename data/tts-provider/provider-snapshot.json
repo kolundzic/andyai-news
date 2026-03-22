@@ -1,0 +1,32 @@
+{
+  "version": "v1.4.0-b",
+  "default_provider": "mock_tts",
+  "providers": [
+    {
+      "provider": "mock_tts",
+      "locales": ["en", "sr", "jp"],
+      "formats": ["mp3", "wav", "ogg"],
+      "supports_ssml": false,
+      "supports_style": false,
+      "supports_pitch": false,
+      "supports_speaking_rate": false,
+      "max_chars_per_request": 12000,
+      "latency_class": "low",
+      "cost_class": "low",
+      "voice_profiles": ["neutral_news_en_01", "neutral_news_sr_01", "neutral_news_jp_01"]
+    },
+    {
+      "provider": "provider_a",
+      "locales": ["en", "sr", "jp"],
+      "formats": ["mp3", "wav"],
+      "supports_ssml": true,
+      "supports_style": true,
+      "supports_pitch": true,
+      "supports_speaking_rate": true,
+      "max_chars_per_request": 8000,
+      "latency_class": "medium",
+      "cost_class": "medium",
+      "voice_profiles": ["neutral_news_en_01", "neutral_news_sr_01", "neutral_news_jp_01"]
+    }
+  ]
+}
