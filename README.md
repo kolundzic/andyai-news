@@ -150,9 +150,9 @@ This MVP can evolve into a larger publishing platform without losing clarity.
 
 ## Current version
 
-**v1.0 — first stable MVP**
+**v1.1.0 — Operator Upgrade Pack consolidated**
 
-Included in v1.0:
+Included in the current release line:
 
 - public homepage
 - story detail pages
@@ -164,6 +164,11 @@ Included in v1.0:
 - publish checklist
 - local publish pack helper
 - production lock panel
+- preview operator upgrade route at `/admin/v110a`
+- multi-day navigation preview
+- draft autosave preview
+- manifest helper / live day switch preview
+- newsletter export preview
 
 ━━━━━━━━━━━━━━━━━━━━
 
@@ -171,14 +176,12 @@ Included in v1.0:
 
 Planned next directions:
 
-- autosave drafts
-- multi-day navigation
-- live publish toggle
-- newsletter export
-- multilingual publishing layer
-- TTS / voice-over workflow
+- integrate selected `/admin/v110a` features into the main `/admin` workflow
+- add archive / history mode
+- add multilingual publishing structure
+- refine newsletter export with stronger real-data binding
+- prepare TTS / voice-over workflow
 - AI-assisted story generation
-- editorial history / archive mode
 
 ━━━━━━━━━━━━━━━━━━━━
 
