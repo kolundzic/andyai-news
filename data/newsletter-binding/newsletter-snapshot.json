@@ -1,0 +1,38 @@
+{
+  "editionId": "2026-03-22-main",
+  "day": "2026-03-22",
+  "locale": "en",
+  "subject": "AndyAI News — 2026-03-22 — EN edition",
+  "preheader": "Deterministic newsletter compose preview for the day spine.",
+  "heroTitle": "Today in AI",
+  "heroSummary": "A preview-ready newsletter payload bound to the current edition/day/locale spine.",
+  "itemCount": 3,
+  "status": "ready_preview",
+  "items": [
+    {
+      "id": "item_001",
+      "title": "Model tooling updates",
+      "slug": "model-tooling-updates",
+      "summary": "Key developments in tooling, workflows, and agent-ready infrastructure.",
+      "category": "tooling",
+      "published": true
+    },
+    {
+      "id": "item_002",
+      "title": "Inference stack notes",
+      "slug": "inference-stack-notes",
+      "summary": "A concise review of current inference and orchestration signals.",
+      "category": "infra",
+      "published": true
+    },
+    {
+      "id": "item_003",
+      "title": "AI product delivery signals",
+      "slug": "ai-product-delivery-signals",
+      "summary": "Operational notes relevant for delivery-grade content packaging.",
+      "category": "delivery",
+      "published": false
+    }
+  ],
+  "generatedAt": "2026-03-22T09:00:00Z"
+}
