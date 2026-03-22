@@ -5,9 +5,9 @@ import {
   V110_FEATURE_CARDS,
   type DraftAutosaveState,
   type LiveDaySwitchState,
-  type MultiDayNavState,
   type NewsletterExportState
 } from "@/lib/v110a-types";
+import type { V110ManifestSummary } from "@/lib/v110a-manifest";
 import {
   V110_STORAGE_KEYS,
   nowIso,
@@ -27,15 +27,6 @@ function SectionTitle({ title, subtitle }: { title: string; subtitle?: string })
 }
 
 function StatusBadge({ status }: { status: "planned" | "skeleton" | "next" | "done" }) {
-  const label =
-    status === "planned"
-      ? "planned"
-      : status === "skeleton"
-      ? "skeleton"
-      : status === "next"
-      ? "next"
-      : "done";
-
   return (
     <span
       style={{
@@ -49,7 +40,7 @@ function StatusBadge({ status }: { status: "planned" | "skeleton" | "next" | "do
         opacity: 0.9
       }}
     >
-      {label}
+      {status}
     </span>
   );
 }
@@ -95,11 +86,33 @@ function Card({
   );
 }
 
-export default function AdminV110AShell() {
-  const [multiDay, setMultiDay] = useState<MultiDayNavState>({
-    currentDate: "2026-03-22",
-    availableDates: ["2026-03-22", "2026-03-21", "2026-03-20"]
-  });
+function MetaRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "140px 1fr",
+        gap: 12,
+        padding: "8px 0",
+        borderBottom: "1px solid rgba(255,255,255,0.08)"
+      }}
+    >
+      <strong>{label}</strong>
+      <span style={{ wordBreak: "break-word", opacity: 0.9 }}>{value}</span>
+    </div>
+  );
+}
+
+export default function AdminV110AShell({
+  manifestSummary
+}: {
+  manifestSummary: V110ManifestSummary;
+}) {
+  const availableDates = manifestSummary.issues.map((issue) => issue.date);
+
+  const [workingDate, setWorkingDate] = useState<string>(
+    manifestSummary.liveDate ?? availableDates[0] ?? ""
+  );
 
   const [autosave, setAutosave] = useState<DraftAutosaveState>(() =>
     safeLoadJSON<DraftAutosaveState>(V110_STORAGE_KEYS.autosaveMeta, {
@@ -111,8 +124,8 @@ export default function AdminV110AShell() {
 
   const [liveDay, setLiveDay] = useState<LiveDaySwitchState>(() =>
     safeLoadJSON<LiveDaySwitchState>(V110_STORAGE_KEYS.liveDayCandidate, {
-      currentLiveDate: "2026-03-22",
-      candidateDate: "2026-03-22"
+      currentLiveDate: manifestSummary.liveDate,
+      candidateDate: manifestSummary.liveDate ?? availableDates[0] ?? null
     })
   );
 
@@ -124,16 +137,24 @@ export default function AdminV110AShell() {
     })
   );
 
+  const selectedIssue = useMemo(() => {
+    return (
+      manifestSummary.issues.find((issue) => issue.date === workingDate) ??
+      manifestSummary.issues[0] ??
+      null
+    );
+  }, [manifestSummary.issues, workingDate]);
+
   const exportPreview = useMemo(() => {
     return [
       "# AndyAI News Bulletin",
       "",
-      `Date: ${liveDay.candidateDate ?? multiDay.currentDate}`,
+      `Date: ${liveDay.candidateDate ?? workingDate}`,
       `Format: ${newsletter.format}`,
       `Include cover: ${newsletter.includeCover ? "yes" : "no"}`,
       `Summaries only: ${newsletter.includeSummariesOnly ? "yes" : "no"}`
     ].join("\n");
-  }, [liveDay.candidateDate, multiDay.currentDate, newsletter]);
+  }, [liveDay.candidateDate, workingDate, newsletter]);
 
   function simulateAutosave() {
     const next = {
@@ -161,13 +182,13 @@ export default function AdminV110AShell() {
   return (
     <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 20px 80px 20px" }}>
       <div style={{ marginBottom: 24 }}>
-        <p style={{ margin: 0, opacity: 0.7, fontSize: 14 }}>AndyAI News / Admin / v1.1.0-a</p>
+        <p style={{ margin: 0, opacity: 0.7, fontSize: 14 }}>AndyAI News / Admin / v1.1.0-b</p>
         <h1 style={{ marginTop: 8, marginBottom: 10, fontSize: 36, lineHeight: 1.1 }}>
-          Operator Upgrade Pack — Skeleton Preview
+          Operator Upgrade Pack — Multi-day Navigation
         </h1>
         <p style={{ margin: 0, maxWidth: 760, lineHeight: 1.7, opacity: 0.9 }}>
-          This route is a safe preview layer for the next admin upgrade cycle. It introduces non-breaking UI slots,
-          local-first state placeholders, and feature direction for the next release steps.
+          This step upgrades the safe preview route with manifest-backed issue discovery, working-date selection,
+          and dataset metadata preview without touching the main admin workflow.
         </p>
       </div>
 
@@ -183,7 +204,7 @@ export default function AdminV110AShell() {
           <Card
             key={item.id}
             title={item.title}
-            status={item.status}
+            status={item.id === "multi-day-navigation" ? "done" : item.status}
             summary={item.summary}
             whyItMatters={item.whyItMatters}
             nextStep={item.nextStep}
@@ -207,24 +228,49 @@ export default function AdminV110AShell() {
           }}
         >
           <SectionTitle
-            title="Multi-day navigation slot"
-            subtitle="Placeholder state for browsing daily issues before wiring it to manifest and filesystem-backed data."
+            title="Multi-day navigation"
+            subtitle="Now backed by manifest issue discovery instead of hardcoded placeholder dates."
           />
-          <label style={{ display: "block", fontSize: 14, marginBottom: 8 }}>Current working date</label>
+
+          <p style={{ marginTop: 0, lineHeight: 1.6 }}>
+            <strong>Current live date:</strong> {manifestSummary.liveDate ?? "not detected"}
+            <br />
+            <strong>Available issues:</strong> {manifestSummary.issues.length}
+          </p>
+
+          <label style={{ display: "block", fontSize: 14, marginBottom: 8 }}>Working date</label>
           <select
-            value={multiDay.currentDate}
-            onChange={(e) => setMultiDay({ ...multiDay, currentDate: e.target.value })}
-            style={{ width: "100%", padding: 10, borderRadius: 10, marginBottom: 12 }}
+            value={workingDate}
+            onChange={(e) => setWorkingDate(e.target.value)}
+            style={{ width: "100%", padding: 10, borderRadius: 10, marginBottom: 16 }}
           >
-            {multiDay.availableDates.map((date) => (
-              <option key={date} value={date}>
-                {date}
+            {manifestSummary.issues.map((issue) => (
+              <option key={issue.date} value={issue.date}>
+                {issue.date}
               </option>
             ))}
           </select>
-          <p style={{ margin: 0, opacity: 0.8, lineHeight: 1.6 }}>
-            Current placeholder dates are hardcoded for preview. Next step is manifest-backed discovery.
-          </p>
+
+          {selectedIssue ? (
+            <div
+              style={{
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 14,
+                padding: 14,
+                background: "rgba(0,0,0,0.15)"
+              }}
+            >
+              <h3 style={{ marginTop: 0, marginBottom: 10, fontSize: 18 }}>Selected issue metadata</h3>
+              <MetaRow label="Date" value={selectedIssue.date} />
+              <MetaRow label="Title" value={selectedIssue.title} />
+              <MetaRow label="Dataset file" value={selectedIssue.file} />
+              <MetaRow label="Cover path" value={selectedIssue.cover} />
+            </div>
+          ) : (
+            <p style={{ marginBottom: 0, opacity: 0.85 }}>
+              No issue metadata could be derived from the manifest.
+            </p>
+          )}
         </section>
 
         <section
@@ -275,7 +321,7 @@ export default function AdminV110AShell() {
             onChange={(e) => rememberLiveDayCandidate(e.target.value)}
             style={{ width: "100%", padding: 10, borderRadius: 10 }}
           >
-            {multiDay.availableDates.map((date) => (
+            {availableDates.map((date) => (
               <option key={date} value={date}>
                 {date}
               </option>
