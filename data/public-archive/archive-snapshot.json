@@ -1,0 +1,33 @@
+{
+  "version": "v1.3.0-b",
+  "generated_at": "2026-03-22T00:00:00Z",
+  "records": [
+    {
+      "id": "en-2026-03-22-main-brief",
+      "day": "2026-03-22",
+      "locale": "en",
+      "slug": "main-brief",
+      "title": "Main Brief",
+      "status": "published",
+      "href": "/archive/en/2026-03-22/main-brief"
+    },
+    {
+      "id": "sr-2026-03-22-main-brief",
+      "day": "2026-03-22",
+      "locale": "sr",
+      "slug": "main-brief",
+      "title": "Glavni pregled",
+      "status": "published",
+      "href": "/archive/sr/2026-03-22/main-brief"
+    },
+    {
+      "id": "jp-2026-03-22-main-brief",
+      "day": "2026-03-22",
+      "locale": "jp",
+      "slug": "main-brief",
+      "title": "メインブリーフ",
+      "status": "published",
+      "href": "/archive/jp/2026-03-22/main-brief"
+    }
+  ]
+}
