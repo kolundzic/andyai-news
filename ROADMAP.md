@@ -70,6 +70,36 @@ Completed foundation:
 
 ━━━━━━━━━━━━━━━━━━━━
 
+## v1.0.1 — ROADMAP + Repo Polish
+
+**Goal:** strengthen repository positioning and make the product direction explicit.
+
+### Scope
+
+#### 1. Add ROADMAP.md
+Define the product direction in a clean, public, canonical form.
+
+Why it matters:
+- makes the repo look intentional and product-driven
+- shows that the project is being developed in controlled steps
+- gives visitors a clear sense of direction
+
+#### 2. Repo positioning polish
+Polish the public GitHub presentation layer.
+
+Includes:
+- stronger repo description
+- refined topics
+- website link check
+- optional profile pin
+
+Why it matters:
+- improves first impression
+- clarifies product category
+- strengthens public product identity
+
+━━━━━━━━━━━━━━━━━━━━
+
 ## v1.1 — Operator Upgrade Pack
 
 **Goal:** make the daily workflow smoother, safer, and faster.
@@ -198,4 +228,3 @@ This is an **editorial operating system** in early form.
 
 **Andrija Kolundzic (Andy)**  
 Founder & Owner
-
