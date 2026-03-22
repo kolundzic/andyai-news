@@ -1,30 +1,24 @@
-import { publicThemeConfig } from "./config";
-import type { PublicCardItem, PublicCardTone } from "./types";
+import { FeaturedCardData } from "./types";
 
-export function getLocaleLabel(locale: string): string {
-  const labels: Record<string, string> = {
-    en: "English",
-    sr: "Serbian",
-    jp: "Japanese",
-  };
-  return labels[locale] ?? locale.toUpperCase();
-}
-
-export function getToneClasses(tone: PublicCardTone): string {
-  if (tone === "primary") {
-    return "border-white/25 bg-white/10";
-  }
-  if (tone === "secondary") {
-    return "border-cyan-400/25 bg-cyan-400/10";
-  }
-  return "border-white/10 bg-white/5";
-}
-
-export function getHomepageCards(): PublicCardItem[] {
-  return [...publicThemeConfig.locales].map((locale) => ({
-    title: `${getLocaleLabel(locale)} Edition`,
-    description: `Open the ${getLocaleLabel(locale).toLowerCase()} public edition surface.`,
-    href: `/${locale}/edition/2026-03-22`,
-    tone: locale === "en" ? "primary" : locale === "sr" ? "secondary" : "muted",
-  }));
+export function getHomepageFeaturedCards(): FeaturedCardData[] {
+  return [
+    {
+      title: "Daily AI Edition",
+      description: "Structured, locale-aware issue pages ready for publishing and archive expansion.",
+      href: "/en/edition/2026-03-22",
+      badge: "Edition",
+    },
+    {
+      title: "Archive Route",
+      description: "Public archive path prepared for day-by-day browsing and future replay flows.",
+      href: "/archive/en/2026-03-22",
+      badge: "Archive",
+    },
+    {
+      title: "Audio Lane",
+      description: "Audio production foundation is now in place: jobs, providers, assets, transcript, approval, editions, archive.",
+      href: "/admin/audio/queue",
+      badge: "Audio",
+    },
+  ];
 }

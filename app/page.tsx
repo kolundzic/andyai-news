@@ -1,97 +1,86 @@
-export default function HomePage() {
-  const cards = [
-    {
-      title: "English Edition",
-      description: "Clean public edition surface for the latest day.",
-      href: "/en/edition/2026-03-22",
-    },
-    {
-      title: "Serbian Edition",
-      description: "Locale-aware route prepared for multilingual publishing.",
-      href: "/sr/edition/2026-03-22",
-    },
-    {
-      title: "Archive Surface",
-      description: "Public archive route with better hierarchy and spacing.",
-      href: "/archive/en/2026-03-22",
-    },
-  ];
+import Link from "next/link";
+import { publicUiHomepageConfig } from "@/lib/public-ui/config";
+import { getHomepageFeaturedCards } from "@/lib/public-ui/helpers";
 
-  const box =
-    "rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm";
-  const button =
-    "inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/15";
+export default function HomePage() {
+  const cards = getHomepageFeaturedCards();
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#14346b_0%,_#07101f_42%,_#02050a_100%)] px-6 py-10 text-white">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
-          Public UI Polish v0.1-a
+    <main className="min-h-screen bg-neutral-950 text-neutral-100">
+      <section className="mx-auto max-w-6xl px-6 py-16 md:px-8 md:py-24">
+        <div className="max-w-3xl">
+          <div className="mb-4 inline-flex rounded-full border border-neutral-800 bg-neutral-900 px-3 py-1 text-xs font-medium tracking-wide text-neutral-300">
+            AI News • Multilingual • Audio-ready
+          </div>
+          <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
+            {publicUiHomepageConfig.heroTitle}
+          </h1>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-300 md:text-lg">
+            {publicUiHomepageConfig.heroSubtitle}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/en/edition/2026-03-22" className="rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-black transition hover:opacity-90">
+              Open featured edition
+            </Link>
+            <Link href="/archive/en/2026-03-22" className="rounded-2xl border border-neutral-700 px-5 py-3 text-sm font-semibold text-neutral-100 transition hover:bg-neutral-900">
+              Browse archive
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-8 md:grid-cols-3 md:px-8">
+        {cards.map((card) => (
+          <Link key={card.title} href={card.href} className="group rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-neutral-700 hover:bg-neutral-900">
+            <div className="mb-4 inline-flex rounded-full border border-neutral-700 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-neutral-300">
+              {card.badge ?? "Featured"}
+            </div>
+            <h2 className="text-xl font-semibold tracking-tight">{card.title}</h2>
+            <p className="mt-3 text-sm leading-6 text-neutral-300">{card.description}</p>
+            <div className="mt-5 text-sm font-medium text-neutral-100">Open →</div>
+          </Link>
+        ))}
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-6 px-6 py-10 md:grid-cols-[1.3fr_0.7fr] md:px-8">
+        <div className="rounded-3xl border border-neutral-800 bg-neutral-900/60 p-6 md:p-8">
+          <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-neutral-400">
+            {publicUiHomepageConfig.latestLabel}
+          </div>
+          <h3 className="text-2xl font-semibold tracking-tight">Cleaner homepage rhythm for featured issues and public discovery</h3>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-300 md:text-base">
+            This pass improves hierarchy, card readability, CTA placement, and section pacing so the public surface finally starts to feel like a real AI news product rather than only an internal publishing skeleton.
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div className="rounded-2xl border border-neutral-800 bg-neutral-950/60 p-4">
+              <div className="text-xs font-medium uppercase tracking-wide text-neutral-400">Latest edition</div>
+              <div className="mt-2 text-lg font-semibold">March 22, 2026</div>
+              <div className="mt-2 text-sm text-neutral-300">Locale-aware issue page prepared for EN / SR / JP expansion.</div>
+            </div>
+            <div className="rounded-2xl border border-neutral-800 bg-neutral-950/60 p-4">
+              <div className="text-xs font-medium uppercase tracking-wide text-neutral-400">Public archive</div>
+              <div className="mt-2 text-lg font-semibold">Daily browsing path</div>
+              <div className="mt-2 text-sm text-neutral-300">Archive routes are now easier to surface visually and pair with future audio replay.</div>
+            </div>
+          </div>
         </div>
 
-        <section className="grid gap-6 lg:grid-cols-[1.4fr_0.8fr]">
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/30 backdrop-blur-md">
-            <p className="mb-4 text-sm uppercase tracking-[0.24em] text-cyan-200">
-              AndyAI News
-            </p>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">
-              Modern multilingual AI news frontend, now with a cleaner public shell.
-            </h1>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-slate-200 md:text-lg">
-              The publishing, archive, newsletter, and audio layers are now backed by a cleaner public presentation. This first polish pass strengthens layout rhythm, hierarchy, and route discoverability.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="/en/edition/2026-03-22" className={button}>Open today&apos;s edition</a>
-              <a href="/archive/en/2026-03-22" className={button}>Browse archive</a>
-              <a href="/admin/audio/queue" className={button}>Audio lane</a>
-            </div>
+        <div className="space-y-6">
+          <div className="rounded-3xl border border-neutral-800 bg-neutral-900/60 p-6">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-400">{publicUiHomepageConfig.newsletterLabel}</div>
+            <h3 className="mt-3 text-xl font-semibold tracking-tight">Get the next AI edition by mail</h3>
+            <p className="mt-3 text-sm leading-6 text-neutral-300">Newsletter delivery groundwork is already in place. This block gives the public homepage a clearer subscription anchor.</p>
+            <div className="mt-5 rounded-2xl border border-neutral-700 bg-neutral-950/70 px-4 py-3 text-sm text-neutral-400">Newsletter CTA placeholder</div>
           </div>
 
-          <div className={box}>
-            <p className="text-sm uppercase tracking-[0.2em] text-slate-300">
-              Foundation
-            </p>
-            <div className="mt-5 space-y-4 text-sm leading-7 text-slate-200">
-              <div>
-                <div className="font-semibold text-white">Publishing</div>
-                <div>Clearer public route hierarchy for editions and archive.</div>
-              </div>
-              <div>
-                <div className="font-semibold text-white">Newsletter</div>
-                <div>Stronger CTA space for future delivery and sign-up surfaces.</div>
-              </div>
-              <div>
-                <div className="font-semibold text-white">Audio</div>
-                <div>Visible home for the audio-capable newsroom OS path.</div>
-              </div>
-            </div>
+          <div className="rounded-3xl border border-neutral-800 bg-neutral-900/60 p-6">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-400">{publicUiHomepageConfig.audioLabel}</div>
+            <h3 className="mt-3 text-xl font-semibold tracking-tight">Audio brief lane is ready for visible promotion</h3>
+            <p className="mt-3 text-sm leading-6 text-neutral-300">The public UI can now reserve a stable card for listen-mode, even before the richer player polish pack lands.</p>
+            <div className="mt-5 rounded-2xl border border-dashed border-neutral-700 px-4 py-4 text-sm text-neutral-400">Public audio teaser placeholder</div>
           </div>
-        </section>
-
-        <section className="mt-10">
-          <div className="mb-5 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-300">Public routes</p>
-              <h2 className="mt-2 text-2xl font-semibold">Key surfaces</h2>
-            </div>
-            <a href="/admin" className={button}>Admin dashboard</a>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-3">
-            {cards.map((card) => (
-              <a
-                key={card.href}
-                href={card.href}
-                className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6 transition hover:-translate-y-0.5 hover:bg-white/10"
-              >
-                <div className="text-lg font-semibold">{card.title}</div>
-                <div className="mt-3 text-sm leading-7 text-slate-300">{card.description}</div>
-                <div className="mt-5 text-sm font-medium text-cyan-200">Open route →</div>
-              </a>
-            ))}
-          </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
   );
 }

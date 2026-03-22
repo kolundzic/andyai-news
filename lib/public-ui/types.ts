@@ -1,16 +1,11 @@
-export type PublicCardTone = "primary" | "secondary" | "muted";
-
-export interface PublicThemeConfig {
-  siteName: string;
-  tagline: string;
-  locales: string[];
-  heroTitle: string;
-  heroSubtitle: string;
-}
-
-export interface PublicCardItem {
+export interface FeaturedCardData {
   title: string;
   description: string;
   href: string;
-  tone: PublicCardTone;
+  badge?: string;
+}
+
+export interface HomepageSectionData {
+  heading: string;
+  items: FeaturedCardData[];
 }
