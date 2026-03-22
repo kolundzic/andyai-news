@@ -1,0 +1,52 @@
+{
+  "jobs": [
+    {
+      "job_id": "audjob_2026-03-22_2026-03-22-main_en_daily-brief_v1",
+      "edition_id": "2026-03-22-main",
+      "day": "2026-03-22",
+      "locale": "en",
+      "source_kind": "daily_brief",
+      "source_ref": "edition:2026-03-22-main:summary:en",
+      "source_text_hash": "sha256:demo-en-001",
+      "voice_profile": "neutral_news_en_01",
+      "provider": "mock_tts",
+      "format": "mp3",
+      "priority": 80,
+      "status": "queued",
+      "attempt_count": 0,
+      "max_attempts": 3,
+      "worker_id": null,
+      "lease_expires_at": null,
+      "created_at": "2026-03-22T09:00:00Z",
+      "updated_at": "2026-03-22T09:00:00Z",
+      "claimed_at": null,
+      "completed_at": null,
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "job_id": "audjob_2026-03-22_2026-03-22-main_sr_daily-brief_v1",
+      "edition_id": "2026-03-22-main",
+      "day": "2026-03-22",
+      "locale": "sr",
+      "source_kind": "daily_brief",
+      "source_ref": "edition:2026-03-22-main:summary:sr",
+      "source_text_hash": "sha256:demo-sr-001",
+      "voice_profile": "neutral_news_sr_01",
+      "provider": "mock_tts",
+      "format": "mp3",
+      "priority": 60,
+      "status": "rendering",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "worker_id": "audio-worker-01",
+      "lease_expires_at": "2026-03-22T09:06:00Z",
+      "created_at": "2026-03-22T09:01:00Z",
+      "updated_at": "2026-03-22T09:02:30Z",
+      "claimed_at": "2026-03-22T09:01:10Z",
+      "completed_at": null,
+      "error_code": null,
+      "error_message": null
+    }
+  ]
+}
