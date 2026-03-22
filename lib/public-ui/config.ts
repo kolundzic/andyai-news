@@ -1,35 +1,41 @@
-import type { PublicUiCtaCard, PublicUiSurfaceContent } from "@/lib/public-ui/types";
+import type { PublicUiCtaCard, PublicUiHero, PublicUiNavLink } from "@/lib/public-ui/types";
 
-export const PUBLIC_UI_SURFACE: PublicUiSurfaceContent = {
+export const PUBLIC_UI_HERO: PublicUiHero = {
   badge: "AndyAI News",
-  title: "AI news delivery, archive, newsletter, and audio surfaces",
+  title: "AI news, archive, newsletter, and audio surfaces in one cleaner public experience.",
   description:
-    "A cleaner public layer for editions, archive reading, newsletter prompts, and the growing audio production lane.",
+    "A more consistent public layer connecting editions, archive navigation, newsletter delivery, and the growing audio production lane.",
 };
 
-export const HOMEPAGE_CTA_CARDS: PublicUiCtaCard[] = [
+export const PUBLIC_UI_PRIMARY_NAV: PublicUiNavLink[] = [
+  { label: "Home", href: "/" },
+  { label: "Latest Edition", href: "/en/edition/2026-03-22" },
+  { label: "Archive", href: "/archive/en/2026-03-22" },
+];
+
+export const PUBLIC_UI_HOME_CARDS: PublicUiCtaCard[] = [
   {
-    title: "Latest Edition",
-    description: "Open the latest public edition page with cleaner hierarchy and stronger reading flow.",
+    title: "Read the Latest Edition",
+    description: "Open the latest edition with cleaner hierarchy and stronger reading flow.",
     href: "/en/edition/2026-03-22",
     cta: "Open edition",
   },
   {
-    title: "Archive",
-    description: "Browse the archive surface by locale and day with a more readable public layout.",
+    title: "Browse the Archive",
+    description: "Move through archive views by locale and day with clearer structure.",
     href: "/archive/en/2026-03-22",
     cta: "Open archive",
   },
   {
-    title: "Audio Lane",
-    description: "Jump into the audio production lane now connected to queue, storage, transcript, approval, and archive.",
-    href: "/admin/audio/queue",
-    cta: "Open audio lane",
+    title: "Audio Surface",
+    description: "Queue, provider, transcript, approval, editions, and archive now connect into one audio lane.",
+    href: "/admin/audio/player",
+    cta: "Open audio surface",
   },
   {
-    title: "Newsletter",
-    description: "Review the newsletter delivery surface and tighter publishing bridge for outbound issues.",
+    title: "Newsletter Delivery",
+    description: "Jump from public reading flow into the newsletter delivery surface.",
     href: "/admin/newsletter/delivery",
-    cta: "Open newsletter lane",
+    cta: "Open newsletter",
   },
 ];
