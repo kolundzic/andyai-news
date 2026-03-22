@@ -1,0 +1,161 @@
+{
+  "date": "2026-03-22",
+  "title": "AndyAI News",
+  "subtitle": "Top AI news today \u2014 summary + detail views",
+  "coverImage": "/covers/2026-03-22-cover.jpg",
+  "news": [
+    {
+      "id": 1,
+      "title": "AI Agents Enter the Execution Era",
+      "summary": "AI systems are moving from answering questions to completing multi-step tasks across code, tools, and workflows.",
+      "impact": "Automation leap",
+      "whyItMatters": "This changes AI from a helper into an operator. Companies that adopt this shift early can reduce repetitive work and speed up delivery.",
+      "content": [
+        "The biggest change in AI right now is not just better chat quality. It is the rise of agents that can take a goal, break it into steps, use tools, and produce a finished result.",
+        "Instead of stopping at suggestions, these systems can browse documentation, write code, run tests, prepare reports, and return a traceable output. That makes them useful for real operations, not only brainstorming.",
+        "For product teams, this means the value of AI is moving closer to execution. The winners will be those who design safe, structured workflows where AI can act, while humans still review the highest-risk steps."
+      ],
+      "keyPoints": [
+        "AI is shifting from chat to action",
+        "Multi-step workflows are becoming standard",
+        "Execution quality and verification now matter more than raw model hype"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Open-Source Agent Frameworks Accelerate",
+      "summary": "Open ecosystems for agent orchestration, tooling, and automation are expanding fast and giving builders more freedom.",
+      "impact": "Open innovation",
+      "whyItMatters": "Open-source lowers the cost of experimentation and helps smaller teams build serious systems without depending on one vendor.",
+      "content": [
+        "More builders are choosing open frameworks for agent systems because they want transparency, control, and the ability to customize each layer.",
+        "This is especially important when teams need their own memory, approval steps, logging, or hardware integrations. Closed systems may be easier to start with, but open systems often win when a project becomes strategic.",
+        "The result is a growing ecosystem of tools for planning, orchestration, browser automation, memory, and verification. That is pushing the industry toward modular AI infrastructure."
+      ],
+      "keyPoints": [
+        "Open frameworks are becoming more capable",
+        "Modularity is a major advantage",
+        "Custom control is essential for long-term products"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Smaller Models Keep Getting Smarter",
+      "summary": "Compact models are improving quickly and becoming practical for local, private, and low-cost AI deployments.",
+      "impact": "Edge advantage",
+      "whyItMatters": "Many businesses do not need the largest model for every task. Smaller models unlock lower cost, privacy, and speed.",
+      "content": [
+        "A major trend in AI is the steady improvement of smaller models. With better training methods, distillation, and tool usage, they are becoming much more useful than before.",
+        "For edge devices, laptops, and privacy-sensitive workloads, these models can provide a strong balance between performance and cost. That makes them ideal for daily operational tasks, internal copilots, and offline support.",
+        "This trend also expands the number of products that can include AI locally. It reduces dependency on the cloud and creates more room for private or hybrid architectures."
+      ],
+      "keyPoints": [
+        "Smaller models reduce cost",
+        "Local deployment improves privacy",
+        "Hybrid AI design is becoming practical"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Trust and Verification Layers Become Essential",
+      "summary": "Teams are paying more attention to proofs, logs, receipts, approvals, and signed outputs for agent systems.",
+      "impact": "Trust shift",
+      "whyItMatters": "As AI moves closer to execution, the main question becomes: can you prove what happened and verify the result?",
+      "content": [
+        "When AI only generated draft text, weak verification was tolerated. But once AI starts acting inside real systems, trust can no longer be optional.",
+        "That is why more projects are adding execution traces, signed outputs, approval checkpoints, and policy-driven controls. These are the foundations of production-grade AI.",
+        "In practice, this means future AI products will be judged not only by how smart they look, but by how reliably they can show their work and survive review."
+      ],
+      "keyPoints": [
+        "Verification is now a product feature",
+        "Receipts and logs matter",
+        "Trust architecture will separate demos from real systems"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Multi-Agent Systems Go Mainstream",
+      "summary": "Single assistants are giving way to coordinated teams of specialized agents working under an orchestrator.",
+      "impact": "System design change",
+      "whyItMatters": "Complex work is easier to manage when specialized AI roles are separated and coordinated clearly.",
+      "content": [
+        "Many builders now see that one general AI agent is not always the best structure. A more stable pattern is to split work across specialized roles: research, planning, coding, reviewing, reporting, and approval.",
+        "This makes the system easier to control and often easier to debug. Each role can have its own rules, tools, and permissions.",
+        "The orchestrator then becomes the real brain of the operation, deciding which agent handles which task and when a human must step in."
+      ],
+      "keyPoints": [
+        "Specialized agents increase clarity",
+        "Orchestrators are becoming core infrastructure",
+        "This mirrors how strong human teams operate"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "AI Browser Automation Gains Momentum",
+      "summary": "AI systems are increasingly able to navigate websites, fill forms, read dashboards, and complete routine web tasks.",
+      "impact": "Digital worker",
+      "whyItMatters": "This opens the door to practical automation in support, operations, research, and back-office work.",
+      "content": [
+        "Browser automation is becoming one of the most practical layers in the AI stack. It allows agents to work inside existing software without requiring every tool to expose a perfect API.",
+        "That is important because much real work still happens in dashboards, admin panels, and websites designed for humans. AI that can navigate those interfaces becomes immediately valuable.",
+        "For businesses, the opportunity is large. Repetitive online tasks can be standardized, logged, and delegated while human workers stay focused on higher-value decisions."
+      ],
+      "keyPoints": [
+        "Browser use widens AI applicability",
+        "Legacy software can still be automated",
+        "Operational productivity is a major near-term use case"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "AI-Native Workflows Replace Traditional Workflows",
+      "summary": "The shift is no longer about replacing a single job. It is about redesigning how whole workflows are executed.",
+      "impact": "Operational redesign",
+      "whyItMatters": "The companies that rethink the workflow itself will gain more than those who only add AI to old processes.",
+      "content": [
+        "A common mistake is to treat AI like a simple add-on to an unchanged process. The deeper opportunity is to redesign the workflow around what AI can do well.",
+        "This includes faster triage, automated routing, agent-based drafting, review checkpoints, and evidence capture. The workflow becomes leaner, not just more automated.",
+        "In other words, the main transformation is architectural. AI changes the structure of work itself, and that is where the biggest productivity gains come from."
+      ],
+      "keyPoints": [
+        "Workflow redesign matters more than surface automation",
+        "AI-native operations will define the next competitive edge",
+        "This is a management shift as much as a technical one"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "AI in Biology and Medicine Continues to Surge",
+      "summary": "AI is playing a larger role in discovery, analysis, and decision support across life sciences and healthcare.",
+      "impact": "Real-world impact",
+      "whyItMatters": "This is one of the fields where AI can create the deepest practical value for society.",
+      "content": [
+        "Healthcare and biology remain among the most meaningful frontiers for AI. The reason is simple: even small improvements in speed or quality can produce major real-world benefits.",
+        "AI is helping with pattern recognition, scientific search, hypothesis generation, and support tools for complex analysis. It will not replace domain expertise, but it can amplify it significantly.",
+        "Over time, this area may become one of the strongest proofs that AI is not just a media trend but a genuine civilizational tool."
+      ],
+      "keyPoints": [
+        "Life sciences remain a top-value AI domain",
+        "Human expertise stays essential",
+        "AI works best here as an amplifier, not a miracle box"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Hybrid AI Wins: Cloud Plus Edge",
+      "summary": "The strongest practical architecture combines fast local AI with powerful cloud AI rather than choosing only one side.",
+      "impact": "Architecture win",
+      "whyItMatters": "Hybrid systems balance privacy, speed, resiliency, and capability better than cloud-only or local-only designs.",
+      "content": [
+        "The old debate of local versus cloud is being replaced by a more useful model: use both, with clear routing rules.",
+        "Local AI handles quick, private, or offline tasks. Cloud AI handles heavier reasoning, large context, or complex generation. Together they create a more practical system.",
+        "This is especially important for products, devices, and enterprise tools that need both responsiveness and power. Hybrid routing is becoming a key design principle."
+      ],
+      "keyPoints": [
+        "Hybrid AI is flexible and resilient",
+        "Routing decisions are becoming strategic",
+        "This pattern fits both software and smart devices"
+      ]
+    }
+  ]
+}

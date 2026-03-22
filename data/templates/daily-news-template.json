@@ -1,0 +1,25 @@
+{
+  "date": "YYYY-MM-DD",
+  "title": "AndyAI News",
+  "subtitle": "Top AI news today \u2014 summary + detail views",
+  "coverImage": "/covers/YYYY-MM-DD-cover.jpg",
+  "news": [
+    {
+      "id": 1,
+      "title": "Story title",
+      "summary": "One-sentence summary for the card and story header.",
+      "impact": "Impact label",
+      "whyItMatters": "One clear sentence explaining why this matters.",
+      "content": [
+        "Paragraph 1.",
+        "Paragraph 2.",
+        "Paragraph 3."
+      ],
+      "keyPoints": [
+        "Key point 1",
+        "Key point 2",
+        "Key point 3"
+      ]
+    }
+  ]
+}
