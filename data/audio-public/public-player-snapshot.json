@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "player_version": "1",
+  "asset_id": "audasset_2026-03-22_main_en_daily-brief_v1",
+  "edition_id": "2026-03-22-main",
+  "day": "2026-03-22",
+  "locale": "en",
+  "role": "daily_brief",
+  "title": "Listen to today’s edition",
+  "audio_url": "/audio/en/2026-03-22/main-brief.mp3",
+  "metadata_url": "/audio/en/2026-03-22/main-brief.json",
+  "transcript_url": "/audio/en/2026-03-22/main-brief.txt",
+  "captions_url": "/audio/en/2026-03-22/main-brief.vtt",
+  "mime_type": "audio/mpeg",
+  "duration_sec": 412,
+  "voice_profile": "neutral_news_en_01",
+  "generated_at": "2026-03-22T09:00:00.000Z",
+  "published": true,
+  "stale": false,
+  "status": "ready",
+  "message": "Public audio contract resolved."
+}
