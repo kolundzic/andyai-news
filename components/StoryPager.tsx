@@ -8,9 +8,10 @@ type Props = {
   total: number;
   prevHref?: string;
   nextHref?: string;
+  dateLabel?: string;
 };
 
-export default function StoryPager({ current, total, prevHref, nextHref }: Props) {
+export default function StoryPager({ current, total, prevHref, nextHref, dateLabel }: Props) {
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'ArrowLeft' && prevHref) {
@@ -26,6 +27,7 @@ export default function StoryPager({ current, total, prevHref, nextHref }: Props
   }, [prevHref, nextHref]);
 
   const progressWidth = `${(current / total) * 100}%`;
+  const remaining = total - current;
 
   return (
     <>
@@ -34,27 +36,30 @@ export default function StoryPager({ current, total, prevHref, nextHref }: Props
           <div className="story-progress-fill" style={{ width: progressWidth }} />
         </div>
         <div className="story-progress-meta">
-          <span>{current}/{total}</span>
-          <span>Use ← → keys</span>
+          <span>
+            Story {current} of {total}
+            {dateLabel ? ` • ${dateLabel}` : ''}
+          </span>
+          <span>{remaining > 0 ? `${remaining} left` : 'Final story'} • Use ← → keys</span>
         </div>
       </div>
 
       <div className="story-bottom-bar">
         {prevHref ? (
           <Link href={prevHref} className="story-cta secondary">
-            ← Previous
+            ← Previous story
           </Link>
         ) : (
-          <span className="story-cta secondary disabled">← Previous</span>
+          <span className="story-cta secondary disabled">← Start of briefing</span>
         )}
 
         {nextHref ? (
           <Link href={nextHref} className="story-cta primary">
-            Next →
+            Continue to next story →
           </Link>
         ) : (
           <Link href="/" className="story-cta primary">
-            Finish ↗
+            Finish briefing ↗
           </Link>
         )}
       </div>
