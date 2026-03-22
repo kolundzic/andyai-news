@@ -1,0 +1,33 @@
+{
+  "version": "v1.4.0-f",
+  "records": [
+    {
+      "approval_id": "audappr_2026-03-22_main_en_daily-brief_v1",
+      "asset_id": "audasset_2026-03-22_main_en_daily-brief_v1",
+      "edition_id": "2026-03-22-main",
+      "day": "2026-03-22",
+      "locale": "en",
+      "role": "daily_brief",
+      "approval_state": "rendered_unreviewed",
+      "review_required": true,
+      "approved_by": null,
+      "published_at": null,
+      "created_at": "2026-03-22T09:05:00Z",
+      "updated_at": "2026-03-22T09:05:00Z"
+    },
+    {
+      "approval_id": "audappr_2026-03-22_main_sr_daily-brief_v1",
+      "asset_id": "audasset_2026-03-22_main_sr_daily-brief_v1",
+      "edition_id": "2026-03-22-main",
+      "day": "2026-03-22",
+      "locale": "sr",
+      "role": "daily_brief",
+      "approval_state": "approved_internal",
+      "review_required": true,
+      "approved_by": "operator",
+      "published_at": null,
+      "created_at": "2026-03-22T09:10:00Z",
+      "updated_at": "2026-03-22T09:15:00Z"
+    }
+  ]
+}
