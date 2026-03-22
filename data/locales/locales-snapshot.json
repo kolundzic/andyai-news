@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-03-22T00:00:00.000Z",
+  "defaultLocale": "en",
+  "locales": [
+    {
+      "code": "en",
+      "label": "English",
+      "nativeLabel": "English",
+      "defaultDirection": "ltr",
+      "enabled": true,
+      "isDefault": true
+    },
+    {
+      "code": "sr",
+      "label": "Serbian",
+      "nativeLabel": "Srpski",
+      "defaultDirection": "ltr",
+      "enabled": true
+    },
+    {
+      "code": "jp",
+      "label": "Japanese",
+      "nativeLabel": "日本語",
+      "defaultDirection": "ltr",
+      "enabled": true
+    }
+  ],
+  "notes": [
+    "Multilingual structure bridge active.",
+    "Locale-aware content spine prepared.",
+    "Safe overlay only; /admin/v110a remains unchanged."
+  ]
+}
