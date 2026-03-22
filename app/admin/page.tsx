@@ -34,6 +34,10 @@ type NewsPayload = {
   news: Story[];
 };
 
+function makeIssue(level: ValidationLevel, message: string): ValidationIssue {
+  return { level, message };
+}
+
 function createEmptyStory(id: number): Story {
   return {
     id,
@@ -111,114 +115,69 @@ function validatePayload(payload: NewsPayload): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
   if (!payload.date || !/^\d{4}-\d{2}-\d{2}$/.test(payload.date)) {
-    issues.push({
-      level: 'error',
-      message: 'Date is missing or not in YYYY-MM-DD format.',
-    });
+    issues.push(makeIssue('error', 'Date is missing or not in YYYY-MM-DD format.'));
   }
 
   if (!payload.title.trim()) {
-    issues.push({
-      level: 'error',
-      message: 'Top-level title is required.',
-    });
+    issues.push(makeIssue('error', 'Top-level title is required.'));
   }
 
   if (!payload.subtitle.trim()) {
-    issues.push({
-      level: 'warning',
-      message: 'Subtitle is empty.',
-    });
+    issues.push(makeIssue('warning', 'Subtitle is empty.'));
   }
 
   if (!payload.coverImage.trim()) {
-    issues.push({
-      level: 'error',
-      message: 'Cover image path is required.',
-    });
+    issues.push(makeIssue('error', 'Cover image path is required.'));
   }
 
   if (!Array.isArray(payload.news)) {
-    issues.push({
-      level: 'error',
-      message: 'news must be an array.',
-    });
+    issues.push(makeIssue('error', 'news must be an array.'));
     return issues;
   }
 
   if (payload.news.length !== 9) {
-    issues.push({
-      level: 'warning',
-      message: `Expected 9 stories, found ${payload.news.length}.`,
-    });
+    issues.push(makeIssue('warning', `Expected 9 stories, found ${payload.news.length}.`));
   }
 
   payload.news.forEach((story, index) => {
     const label = `Story ${story.id || index + 1}`;
 
     if (story.id !== index + 1) {
-      issues.push({
-        level: 'warning',
-        message: `${label}: ID should usually be ${index + 1}.`,
-      });
+      issues.push(makeIssue('warning', `${label}: ID should usually be ${index + 1}.`));
     }
 
     if (!story.title.trim()) {
-      issues.push({
-        level: 'error',
-        message: `${label}: title is required.`,
-      });
+      issues.push(makeIssue('error', `${label}: title is required.`));
     }
 
     if (!story.summary.trim()) {
-      issues.push({
-        level: 'error',
-        message: `${label}: summary is required.`,
-      });
+      issues.push(makeIssue('error', `${label}: summary is required.`));
     }
 
     if (!story.impact.trim()) {
-      issues.push({
-        level: 'warning',
-        message: `${label}: impact is empty.`,
-      });
+      issues.push(makeIssue('warning', `${label}: impact is empty.`));
     }
 
     if (!story.whyItMatters.trim()) {
-      issues.push({
-        level: 'warning',
-        message: `${label}: whyItMatters is empty.`,
-      });
+      issues.push(makeIssue('warning', `${label}: whyItMatters is empty.`));
     }
 
     if (!Array.isArray(story.content) || story.content.length < 3) {
-      issues.push({
-        level: 'warning',
-        message: `${label}: content should contain at least 3 paragraphs.`,
-      });
+      issues.push(makeIssue('warning', `${label}: content should contain at least 3 paragraphs.`));
     } else {
       story.content.forEach((paragraph, pIndex) => {
         if (!String(paragraph ?? '').trim()) {
-          issues.push({
-            level: 'warning',
-            message: `${label}: paragraph ${pIndex + 1} is empty.`,
-          });
+          issues.push(makeIssue('warning', `${label}: paragraph ${pIndex + 1} is empty.`));
         }
       });
     }
 
     if (!Array.isArray(story.keyPoints) || story.keyPoints.length < 3) {
-      issues.push({
-        level: 'warning',
-        message: `${label}: keyPoints should contain at least 3 entries.`,
-      });
+      issues.push(makeIssue('warning', `${label}: keyPoints should contain at least 3 entries.`));
     } else {
       story.keyPoints.forEach((point, kIndex) => {
         if (!String(point ?? '').trim()) {
-          issues.push({
-            level: 'warning',
-            message: `${label}: key point ${kIndex + 1} is empty.`,
-          });
+          issues.push(makeIssue('warning', `${label}: key point ${kIndex + 1} is empty.`));
         }
       });
     }
@@ -299,6 +258,7 @@ function buildPublishPack(payload: NewsPayload) {
 
 export default function AdminPage() {
   const latest = sanitizePayload(getLatestPayload());
+  const emptyPayload = createEmptyPayload();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [selectedDate, setSelectedDate] = useState(latest.date);
@@ -318,19 +278,17 @@ export default function AdminPage() {
 
   const validationIssues = useMemo<ValidationIssue[]>(() => {
     if (!parsed) {
-      return [{ level: 'error', message: 'JSON is invalid.' }];
+      return [makeIssue('error', 'JSON is invalid.')];
     }
     return validatePayload(parsed);
   }, [parsed]);
 
   const publishChecks = useMemo<PublishCheck[]>(() => {
-    if (!parsed) {
-      return [];
-    }
+    if (!parsed) return [];
     return getPublishChecklist(parsed, validationIssues);
   }, [parsed, validationIssues]);
 
-  const publishPack = useMemo(() => buildPublishPack(parsed ?? createEmptyPayload()), [parsed]);
+  const publishPack = useMemo(() => buildPublishPack(parsed ?? emptyPayload), [parsed, emptyPayload]);
 
   const errorCount = validationIssues.filter((item) => item.level === 'error').length;
   const warningCount = validationIssues.filter((item) => item.level === 'warning').length;
@@ -339,7 +297,7 @@ export default function AdminPage() {
     ? `/covers/${parsed.date}-cover.jpg`
     : '/covers/YYYY-MM-DD-cover.jpg';
 
-  const stories = parsed?.news ?? createEmptyPayload().news;
+  const stories = parsed?.news ?? emptyPayload.news;
 
   function updatePayload(nextPayload: NewsPayload) {
     const sanitized = sanitizePayload(nextPayload);
@@ -625,7 +583,10 @@ export default function AdminPage() {
             <h2>Publish checklist</h2>
             <div className="checklist-list">
               {publishChecks.map((item) => (
-                <div key={item.label} className={item.ok ? 'checklist-item ok' : 'checklist-item pending'}>
+                <div
+                  key={item.label}
+                  className={item.ok ? 'checklist-item ok' : 'checklist-item pending'}
+                >
                   <div className="checklist-top">
                     <strong>
                       {item.ok ? '✓' : '•'} {item.label}
@@ -786,7 +747,10 @@ export default function AdminPage() {
                     </label>
 
                     {story.content.map((paragraph, index) => (
-                      <label className="admin-field admin-field-wide" key={`content-${story.id}-${index}`}>
+                      <label
+                        className="admin-field admin-field-wide"
+                        key={`content-${story.id}-${index}`}
+                      >
                         <span>Paragraph {index + 1}</span>
                         <textarea
                           rows={4}
