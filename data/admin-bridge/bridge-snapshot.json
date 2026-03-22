@@ -1,0 +1,38 @@
+{
+  "version": "v1.2.0-a",
+  "generatedAt": "2026-03-22T00:00:00Z",
+  "safePreviewBasePath": "/admin/v110a",
+  "productionBasePath": "/admin",
+  "sections": [
+    {
+      "key": "dashboard",
+      "label": "Dashboard",
+      "status": "bridged"
+    },
+    {
+      "key": "editions",
+      "label": "Editions",
+      "status": "planned"
+    },
+    {
+      "key": "newsletter",
+      "label": "Newsletter",
+      "status": "preview_only"
+    },
+    {
+      "key": "archive",
+      "label": "Archive",
+      "status": "planned"
+    },
+    {
+      "key": "locales",
+      "label": "Locales",
+      "status": "planned"
+    },
+    {
+      "key": "audio",
+      "label": "Audio",
+      "status": "planned"
+    }
+  ]
+}
