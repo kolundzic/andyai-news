@@ -53,3 +53,11 @@
 They are the operating backbone of the andyai.news pilot and the early foundation of a future Media Factory publishing standard.**
 
 ━━━━━━━━━━━━━━━━━━━━
+
+--------------------
+
+## Navigation
+
+- [Back to Docs Landing](../README.md)
+- [Back to Docs Index](../99-index/docs-pack-index.md)
+

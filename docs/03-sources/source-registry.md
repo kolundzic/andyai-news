@@ -51,3 +51,11 @@ T4 alerts.
 T5 does not lead the editorial process.**
 
 ━━━━━━━━━━━━━━━━━━━━
+
+--------------------
+
+## Navigation
+
+- [Back to Docs Landing](../README.md)
+- [Back to Docs Index](../99-index/docs-pack-index.md)
+

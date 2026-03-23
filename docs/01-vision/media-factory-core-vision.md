@@ -39,3 +39,11 @@ The pilot should prove that one focused AI magazine can operate with:
 We are building 1 factory-proof that can later produce 50 magazines.**
 
 ━━━━━━━━━━━━━━━━━━━━
+
+--------------------
+
+## Navigation
+
+- [Back to Docs Landing](../README.md)
+- [Back to Docs Index](../99-index/docs-pack-index.md)
+

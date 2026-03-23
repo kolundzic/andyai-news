@@ -96,3 +96,13 @@ SOFT READY
 
 These docs are not a loose archive of ideas.
 They are the operating backbone of the andyai.news pilot and the early foundation of a future Media Factory publishing standard.
+
+--------------------
+
+## Quick navigation
+
+- [Docs Pack Index](99-index/docs-pack-index.md)
+- [Vision](01-vision/media-factory-core-vision.md)
+- [Operations Manual](05-operations/pilot-operations-manual.md)
+- [Launch Readiness](07-readiness/pilot-launch-readiness-checklist.md)
+

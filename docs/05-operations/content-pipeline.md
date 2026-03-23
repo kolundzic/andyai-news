@@ -38,3 +38,11 @@
 **If the article fails source gate or editorial gate, it does not go out.**
 
 ━━━━━━━━━━━━━━━━━━━━
+
+--------------------
+
+## Navigation
+
+- [Back to Docs Landing](../README.md)
+- [Back to Docs Index](../99-index/docs-pack-index.md)
+

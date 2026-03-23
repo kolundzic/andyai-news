@@ -32,3 +32,11 @@
 **If two or more core answers feel weak, the article is not publish-ready.**
 
 ━━━━━━━━━━━━━━━━━━━━
+
+--------------------
+
+## Navigation
+
+- [Back to Docs Landing](../README.md)
+- [Back to Docs Index](../99-index/docs-pack-index.md)
+

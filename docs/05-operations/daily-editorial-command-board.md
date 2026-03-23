@@ -30,3 +30,11 @@
 **First scan. Then choose. Then write. Then review. Then publish. Then verify. Then learn.**
 
 ━━━━━━━━━━━━━━━━━━━━
+
+--------------------
+
+## Navigation
+
+- [Back to Docs Landing](../README.md)
+- [Back to Docs Index](../99-index/docs-pack-index.md)
+
