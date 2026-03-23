@@ -21,30 +21,47 @@ export default function ArchiveIndexPage() {
 
         <div className="rounded-2xl border border-neutral-200 bg-white p-5">
           <div className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
-            Reading flow
+            Discovery flow
           </div>
-          <p className="mt-2 text-sm leading-6 text-neutral-600">
-            Start here, choose the edition you want, and continue into the full issue view through
-            the locale and day route.
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-neutral-600">
+            Start here when you want to move from a broad archive overview into one specific locale
+            and one specific day. The archive narrows the path before the edition page becomes the
+            final reading surface.
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <div className="rounded-2xl border border-neutral-200 bg-white p-5">
             <h2 className="text-base font-semibold text-neutral-900">What this page is for</h2>
             <p className="mt-2 text-sm leading-6 text-neutral-600">
-              Use the archive to move through published editions in a simple, predictable way
-              before opening an individual issue.
+              Use the archive to move through published editions in a simple, predictable way before
+              opening a single issue.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-neutral-200 bg-white p-5">
+            <h2 className="text-base font-semibold text-neutral-900">What you open next</h2>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              The next useful step is a locale-and-day archive page, where the issue becomes more
+              specific and the handoff into edition reading becomes clearer.
             </p>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 bg-white p-5">
             <h2 className="text-base font-semibold text-neutral-900">Current state</h2>
             <p className="mt-2 text-sm leading-6 text-neutral-600">
-              The archive index is live and stable. Deeper browsing can expand later without
-              changing the current public route structure.
+              The archive index is live and stable. Discovery guidance is now stronger without
+              changing the public route structure.
             </p>
           </div>
+        </div>
+
+        <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50/70 p-5">
+          <h2 className="text-base font-semibold text-neutral-900">Archive reading rule</h2>
+          <p className="mt-2 text-sm leading-6 text-neutral-600">
+            Archive index = overview. Locale/day archive = narrowing step. Edition page = main
+            reading surface.
+          </p>
         </div>
 
         <div className="flex flex-wrap gap-3 pt-2">

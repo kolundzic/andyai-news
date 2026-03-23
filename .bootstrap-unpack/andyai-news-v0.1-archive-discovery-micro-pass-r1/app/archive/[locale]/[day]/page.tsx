@@ -5,7 +5,7 @@ import {
   getPublicUiPrimaryNav,
 } from "@/lib/public-ui/helpers";
 
-export default async function EditionPage({
+export default async function ArchiveDayPage({
   params,
 }: {
   params: Promise<{ locale: string; day: string }>;
@@ -14,7 +14,7 @@ export default async function EditionPage({
   const nav = getPublicUiPrimaryNav();
 
   return (
-    <main className="min-h-screen bg-[#07172d] text-white">
+    <main className="min-h-screen bg-[#081b33] text-white">
       <section className="border-b border-white/10">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-3 px-6 py-4">
           {nav.map((item) => (
@@ -32,7 +32,7 @@ export default async function EditionPage({
       <section className="mx-auto max-w-5xl px-6 py-14">
         <div className="mb-6 flex flex-wrap gap-2">
           <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
-            Edition
+            Archive
           </span>
           <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/70">
             {locale}
@@ -44,54 +44,63 @@ export default async function EditionPage({
 
         <div className="space-y-5">
           <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
-            {locale.toUpperCase()} edition for {day}
+            {locale.toUpperCase()} archive for {day}
           </h1>
 
           <p className="max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
-            This is the main reading surface for the selected locale and day. From here, readers can
-            stay focused on the current issue or move back to the archive without losing context.
+            This archive page keeps the selected locale and date in focus, giving readers a calmer
+            way to revisit stored daily coverage before stepping forward into the matching edition.
           </p>
         </div>
 
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="text-xs uppercase tracking-[0.2em] text-white/50">Flow continuity</div>
+          <div className="text-xs uppercase tracking-[0.2em] text-white/50">Discovery handoff</div>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
-            Home leads into the archive, the archive narrows the date and locale, and this edition
-            page becomes the final reading entry point for the chosen issue.
+            This page is the narrowing step between archive overview and the final edition reading
+            surface. Stay here to confirm locale and date, then continue when you are ready to read
+            the issue itself.
           </p>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Read this issue</h2>
+            <h2 className="text-lg font-semibold">Review the archive</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Use this route as the clearest public reading entry for the selected locale and day.
+              Use this route to revisit the archived state for a specific locale and day without
+              losing your place in the broader flow.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Return to archive</h2>
+            <h2 className="text-lg font-semibold">Best next move</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Step back into the matching archive view while keeping the same locale and date in
-              focus.
+              When the locale and date are confirmed, continue to the edition page for the main
+              reading surface and the clearest issue-level context.
             </p>
             <div className="mt-4">
               <Link
-                href={getLocaleArchiveHref(locale, day)}
-                className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+                href={getLocaleEditionHref(locale, day)}
+                className="inline-flex rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
               >
-                Browse archive
+                View edition
               </Link>
             </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Stay oriented</h2>
+            <h2 className="text-lg font-semibold">Keep context visible</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Locale and date remain visible so the edition always feels anchored, readable, and
-              easy to follow.
+              Locale and date stay visible so archive discovery remains anchored and easy to follow.
             </p>
           </div>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-dashed border-white/10 bg-white/5 p-5">
+          <h2 className="text-lg font-semibold">Reading rule</h2>
+          <p className="mt-2 text-sm leading-6 text-white/70">
+            Archive overview gives direction. Locale/day archive confirms the target. Edition page is
+            where focused reading starts.
+          </p>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -102,16 +111,16 @@ export default async function EditionPage({
             Back home
           </Link>
           <Link
-            href={getLocaleArchiveHref(locale, day)}
-            className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
-          >
-            Browse archive
-          </Link>
-          <Link
             href={getLocaleEditionHref(locale, day)}
             className="rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
           >
             View edition
+          </Link>
+          <Link
+            href={getLocaleArchiveHref(locale, day)}
+            className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+          >
+            View archive
           </Link>
         </div>
       </section>

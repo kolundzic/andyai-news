@@ -49,15 +49,16 @@ export default async function ArchiveDayPage({
 
           <p className="max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
             This archive page keeps the selected locale and date in focus, giving readers a calmer
-            step between archive browsing and the full edition reading view.
+            way to revisit stored daily coverage before stepping forward into the matching edition.
           </p>
         </div>
 
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="text-xs uppercase tracking-[0.2em] text-white/50">Flow continuity</div>
+          <div className="text-xs uppercase tracking-[0.2em] text-white/50">Discovery handoff</div>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
-            The archive narrows the path to one locale and one day, then hands the reader forward
-            into the matching edition page when they are ready to read the full issue.
+            This page is the narrowing step between archive overview and the final edition reading
+            surface. Stay here to confirm locale and date, then continue when you are ready to read
+            the issue itself.
           </p>
         </div>
 
@@ -65,21 +66,21 @@ export default async function ArchiveDayPage({
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <h2 className="text-lg font-semibold">Review the archive</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Use this route to revisit archived coverage for a specific locale and date before
-              opening the edition itself.
+              Use this route to revisit the archived state for a specific locale and day without
+              losing your place in the broader flow.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Continue to edition</h2>
+            <h2 className="text-lg font-semibold">Best next move</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Jump directly to the matching edition page without losing the current date and locale
-              context.
+              When the locale and date are confirmed, continue to the edition page for the main
+              reading surface and the clearest issue-level context.
             </p>
             <div className="mt-4">
               <Link
                 href={getLocaleEditionHref(locale, day)}
-                className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+                className="inline-flex rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
               >
                 View edition
               </Link>
@@ -89,9 +90,17 @@ export default async function ArchiveDayPage({
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <h2 className="text-lg font-semibold">Keep context visible</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Locale and date stay visible so archive reading remains anchored and easy to follow.
+              Locale and date stay visible so archive discovery remains anchored and easy to follow.
             </p>
           </div>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-dashed border-white/10 bg-white/5 p-5">
+          <h2 className="text-lg font-semibold">Reading rule</h2>
+          <p className="mt-2 text-sm leading-6 text-white/70">
+            Archive overview gives direction. Locale/day archive confirms the target. Edition page is
+            where focused reading starts.
+          </p>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3">
