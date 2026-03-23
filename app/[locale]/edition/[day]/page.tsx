@@ -43,12 +43,12 @@ export default async function EditionPage({
         </div>
 
         <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
-          Daily edition for {locale.toUpperCase()} on {day}
+          {locale.toUpperCase()} edition for {day}
         </h1>
 
         <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
-          This edition page brings the selected locale and date into one calmer reading surface,
-          with clear paths toward archive browsing, story reading, and the main public homepage.
+          A calmer reading surface for the selected locale and day, with clear paths to the archive,
+          the main homepage, and the stories connected to this edition.
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -60,7 +60,7 @@ export default async function EditionPage({
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Move to archive</h2>
+            <h2 className="text-lg font-semibold">Browse the archive</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
               Keep the same locale and date context while switching to the archive view.
             </p>
@@ -69,7 +69,7 @@ export default async function EditionPage({
                 href={getLocaleArchiveHref(locale, day)}
                 className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
               >
-                Open archive view
+                Browse archive
               </Link>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default async function EditionPage({
             href={getLocaleEditionHref(locale, day)}
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Refresh edition
+            View edition
           </Link>
         </div>
       </section>
