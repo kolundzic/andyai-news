@@ -1,74 +1,72 @@
 import Link from "next/link";
-import {
-  getPublicUiHero,
-  getPublicUiHomeCards,
-  getPublicUiPrimaryNav,
-} from "@/lib/public-ui/helpers";
 
 export default function HomePage() {
-  const hero = getPublicUiHero();
-  const nav = getPublicUiPrimaryNav();
-  const cards = getPublicUiHomeCards();
-
   return (
-    <main className="min-h-screen bg-[#061326] text-white">
-      <section className="border-b border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-6 py-4">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10 hover:text-white"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </section>
+    <main className="mx-auto max-w-5xl px-6 py-14 sm:px-8">
+      <div className="space-y-10">
+        <section className="space-y-4">
+          <p className="text-xs font-medium uppercase tracking-[0.22em] text-neutral-500">
+            AndyAI News
+          </p>
 
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="mb-10 max-w-4xl">
-          <div className="mb-3 inline-flex rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-white/80">
-            {hero.badge}
-          </div>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            {hero.title}
+          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-neutral-950 sm:text-5xl">
+            Daily AI news, editions, and public delivery flow.
           </h1>
-          <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
-            Curated AI and technology briefings with a cleaner reading flow,
-            clearer public surfaces, and a calmer way to move through the day’s key stories.
-          </p>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-white/55 sm:text-base">
-            Start from the latest edition, open an archive day, or move directly into story mode.
-          </p>
-        </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {cards.map((card) => (
-            <div
-              key={card.title}
-              className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]"
+          <p className="max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base">
+            A clean public pilot for publishing AI-focused editions, browsing archive
+            entries, and validating the content flow before wider expansion.
+          </p>
+
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Link
+              href="/archive"
+              className="inline-flex items-center rounded-xl border border-neutral-900 bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
             >
-              <h2 className="text-xl font-semibold">{card.title}</h2>
-              <p className="mt-3 text-sm leading-6 text-white/70">{card.description}</p>
-              <div className="mt-5">
-                <Link
-                  href={card.href}
-                  className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
-                >
-                  {card.cta === "Open"
-                    ? "Open destination"
-                    : card.cta === "Browse"
-                    ? "Browse now"
-                    : card.cta === "Read"
-                    ? "Start reading"
-                    : card.cta}
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+              Open archive
+            </Link>
+
+            <Link
+              href="/admin"
+              className="inline-flex items-center rounded-xl border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-800 transition hover:bg-neutral-50"
+            >
+              Admin
+            </Link>
+          </div>
+        </section>
+
+        <section className="grid gap-4 sm:grid-cols-3">
+          <div className="rounded-2xl border border-neutral-200 bg-white p-5">
+            <h2 className="text-base font-semibold text-neutral-900">
+              Public pilot
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              The public-facing layer is stable, minimal, and ready for disciplined
+              iteration.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-neutral-200 bg-white p-5">
+            <h2 className="text-base font-semibold text-neutral-900">
+              Archive flow
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              Archive and edition routes are active and now sit behind a working
+              soft-ready guardrail check.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-neutral-200 bg-white p-5">
+            <h2 className="text-base font-semibold text-neutral-900">
+              Next build path
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              The next steps are small public polish, content flow tightening, and
+              careful publishing workflow refinement.
+            </p>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
