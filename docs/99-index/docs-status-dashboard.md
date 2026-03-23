@@ -39,12 +39,23 @@
 | Pilot Consolidation Pass | Readiness | active | Stabilization pack across all pilot layers | P0 | Use for pilot tightening |
 | Pilot Launch Readiness Checklist | Readiness | active | NOT READY / SOFT READY / READY framework | P0 | Use for launch judgment |
 | Docs Pack Index | Index | locked | Master map of docs system | P0 | Update when docs grow |
-| Root README | Repo Landing | active | Main public-facing repo entry point | P1 | Polish for stronger public impression |
+| Root README | Repo Landing | active | Main public-facing repo entry point | P1 | Keep aligned with current repo state |
 | Docs Landing README | Repo Landing | active | Main entry point into docs system | P1 | Improve quick-access navigation as needed |
 | Docs Navigation Cross-links | Docs UX | active | Easier GitHub reading flow across docs | P1 | Maintain when adding new docs |
 | Shared Nav Helper | Docs UX | polish-needed | Helper artifact for docs navigation | P2 | Decide later whether to keep or remove |
 | Template Extraction Readiness | Strategic | strategic | Future bridge toward reusable publishing engine | P1-strategic | Later extract into dedicated doc |
 | Future Factory Standard | Strategic | future | General standard for future vertical expansion | P2-strategic | Do not expand until pilot matures more |
+
+--------------------
+
+## Recent repo milestones now reflected in docs
+
+- `64ff842` — **audio admin micro polish pass**
+- `f45120e` — **tighten public content flow**
+- `cdf383e` — **polish news detail page continuity**
+- `d56af23` — **docs: sync recent milestone status and release notes**
+
+These milestones matter because they tightened the admin audio experience, improved the public reading flow, refined the story detail surface, and aligned the root documentation with the real current state of the pilot.
 
 --------------------
 
@@ -70,12 +81,13 @@
 - operations docs are strong and practical
 - readiness logic is healthy and realistic
 - docs navigation is already much better for GitHub reading
+- root-level documentation is now better aligned with recent repo milestones
 
 --------------------
 
 ## Biggest remaining gaps
 
-- root README can become stronger for public GitHub impression
+- release notes are spread across many milestone files and could later use a tighter summary layer
 - SEO checklist still needs more real-world application on live pages
 - Pilot Status Board should be refreshed over time
 - shared nav helper may need cleanup later
