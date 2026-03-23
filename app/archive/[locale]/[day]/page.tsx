@@ -42,27 +42,39 @@ export default async function ArchiveDayPage({
           </span>
         </div>
 
-        <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
-          {locale.toUpperCase()} archive for {day}
-        </h1>
+        <div className="space-y-5">
+          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
+            {locale.toUpperCase()} archive for {day}
+          </h1>
 
-        <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
-          This archive page keeps the selected locale and date in focus, giving readers a calmer
-          way to revisit stored daily coverage and move back into edition or story reading when needed.
-        </p>
+          <p className="max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
+            This archive page keeps the selected locale and date in focus, giving readers a calmer
+            step between archive browsing and the full edition reading view.
+          </p>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
+          <div className="text-xs uppercase tracking-[0.2em] text-white/50">Flow continuity</div>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
+            The archive narrows the path to one locale and one day, then hands the reader forward
+            into the matching edition page when they are ready to read the full issue.
+          </p>
+        </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <h2 className="text-lg font-semibold">Review the archive</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Use this route to revisit the archived state for a specific locale and date.
+              Use this route to revisit archived coverage for a specific locale and date before
+              opening the edition itself.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Return to edition</h2>
+            <h2 className="text-lg font-semibold">Continue to edition</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Jump back to the matching edition page without losing the same date context.
+              Jump directly to the matching edition page without losing the current date and locale
+              context.
             </p>
             <div className="mt-4">
               <Link
@@ -77,7 +89,7 @@ export default async function ArchiveDayPage({
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <h2 className="text-lg font-semibold">Keep context visible</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Locale and date stay visible so archived reading remains anchored and easy to follow.
+              Locale and date stay visible so archive reading remains anchored and easy to follow.
             </p>
           </div>
         </div>
@@ -91,7 +103,7 @@ export default async function ArchiveDayPage({
           </Link>
           <Link
             href={getLocaleEditionHref(locale, day)}
-            className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+            className="rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
           >
             View edition
           </Link>

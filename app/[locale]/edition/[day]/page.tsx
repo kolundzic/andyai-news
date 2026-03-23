@@ -42,27 +42,38 @@ export default async function EditionPage({
           </span>
         </div>
 
-        <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
-          {locale.toUpperCase()} edition for {day}
-        </h1>
+        <div className="space-y-5">
+          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
+            {locale.toUpperCase()} edition for {day}
+          </h1>
 
-        <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
-          A calmer reading surface for the selected locale and day, with clear paths to the archive,
-          the main homepage, and the stories connected to this edition.
-        </p>
+          <p className="max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
+            This is the main reading surface for the selected locale and day. From here, readers can
+            stay focused on the current issue or move back to the archive without losing context.
+          </p>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
+          <div className="text-xs uppercase tracking-[0.2em] text-white/50">Flow continuity</div>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
+            Home leads into the archive, the archive narrows the date and locale, and this edition
+            page becomes the final reading entry point for the chosen issue.
+          </p>
+        </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Read the edition</h2>
+            <h2 className="text-lg font-semibold">Read this issue</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Use this route as the main reading entry point for the selected locale and day.
+              Use this route as the clearest public reading entry for the selected locale and day.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-lg font-semibold">Browse the archive</h2>
+            <h2 className="text-lg font-semibold">Return to archive</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Keep the same locale and date context while switching to the archive view.
+              Step back into the matching archive view while keeping the same locale and date in
+              focus.
             </p>
             <div className="mt-4">
               <Link
@@ -77,7 +88,8 @@ export default async function EditionPage({
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <h2 className="text-lg font-semibold">Stay oriented</h2>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Locale and date remain visible so the edition always feels anchored and easy to follow.
+              Locale and date remain visible so the edition always feels anchored, readable, and
+              easy to follow.
             </p>
           </div>
         </div>
@@ -97,7 +109,7 @@ export default async function EditionPage({
           </Link>
           <Link
             href={getLocaleEditionHref(locale, day)}
-            className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+            className="rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
           >
             View edition
           </Link>
