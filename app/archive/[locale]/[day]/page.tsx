@@ -43,7 +43,7 @@ export default async function ArchiveDayPage({
         </div>
 
         <h1 className="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl">
-          Archive view for {locale.toUpperCase()} on {day}
+          {locale.toUpperCase()} archive for {day}
         </h1>
 
         <p className="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">
@@ -69,7 +69,7 @@ export default async function ArchiveDayPage({
                 href={getLocaleEditionHref(locale, day)}
                 className="inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
               >
-                Open edition view
+                View edition
               </Link>
             </div>
           </div>
@@ -93,13 +93,13 @@ export default async function ArchiveDayPage({
             href={getLocaleEditionHref(locale, day)}
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Open edition
+            View edition
           </Link>
           <Link
             href={getLocaleArchiveHref(locale, day)}
             className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
-            Refresh archive
+            View archive
           </Link>
         </div>
       </section>
