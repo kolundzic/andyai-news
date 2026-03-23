@@ -42,10 +42,28 @@ export default async function NewsDetailPage({ params }: Props) {
           <span className="eyebrow">Daily story {item.id} of {payload.news.length}</span>
           <h1>{item.title}</h1>
           <p className="summary">{item.summary}</p>
+
           <div className="card-meta">
             <span className="pill">⚡ {item.impact}</span>
             <span className="pill">📌 Why it matters</span>
             <span className="pill">🧭 Story mode</span>
+          </div>
+
+          <div className="section" style={{ marginTop: '1rem' }}>
+            <h2>Reading continuity</h2>
+            <p>
+              This story page is the focused reading surface inside the broader daily issue. Move
+              through the briefing in sequence, or return to the homepage when you want the wider
+              public entry view again.
+            </p>
+            <div className="card-meta">
+              <Link href="/" className="pill">
+                ← Back home
+              </Link>
+              <Link href="/news/1" className="pill">
+                Open first story
+              </Link>
+            </div>
           </div>
         </header>
 
@@ -71,18 +89,11 @@ export default async function NewsDetailPage({ params }: Props) {
         </section>
 
         <section className="section">
-          <h2>Reading path</h2>
+          <h2>Continue reading</h2>
           <p>
-            Move through the daily briefing in sequence, or return to the homepage to reopen the broader public reading surface.
+            Use the navigation below to continue through today&apos;s stories in order, or return to
+            the homepage when you want to restart from the broader public surface.
           </p>
-          <div className="card-meta">
-            <Link href="/" className="pill">
-              ← Back home
-            </Link>
-            <Link href="/news/1" className="pill">
-              Open first story
-            </Link>
-          </div>
         </section>
 
         <div className="nav-row">
