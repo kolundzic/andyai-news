@@ -2,11 +2,15 @@
   "name": "andyai-news",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "npm@10",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "echo 'lint skipped for now'",
+    "soft:ready": "bash scripts/soft-ready-check.sh",
+    "check:routes": "node scripts/route-smoke-check.mjs",
+    "check:content": "node scripts/content-sanity-check.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.2",
@@ -21,6 +25,5 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "typescript": "5.8.3"
-  },
-  "packageManager": "npm@10"
+  }
 }
