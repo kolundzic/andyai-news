@@ -123,6 +123,18 @@ That is the healthy path for a real pilot.
 
 --------------------
 
+## Recent stabilization milestones
+
+Recently locked polish and stabilization milestones include:
+
+- `64ff842` — **audio admin micro polish pass**
+- `f45120e` — **tighten public content flow**
+- `cdf383e` — **polish news detail page continuity**
+
+These passes improved operational clarity in the admin audio area, strengthened the public reading flow, and made the story-detail surface feel more consistent with the rest of the site.
+
+--------------------
+
 ## Why this matters
 
 This repo matters because it is not just documenting pages or features.
@@ -202,6 +214,4 @@ docs/
 ├── 06-structure-seo/
 ├── 07-readiness/
 └── 99-index/
-git add README.md docs/99-index/docs-status-dashboard.md
-git commit -m "docs: add docs status dashboard and polish root readme"
-git push
+```
